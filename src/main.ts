@@ -326,7 +326,7 @@ function badgeLabel(option: QuestionOption) {
 }
 
 function useShareFeedback() {
-  const [showCopiedFeedback, setShowCopiedFeedback] = React.useState(false);
+  const [toastMessage, setToastMessage] = React.useState("");
   const copiedTimerRef = React.useRef<number | null>(null);
 
   React.useEffect(() => () => {
@@ -336,18 +336,30 @@ function useShareFeedback() {
   const shareResult = async () => {
     track("share_clicked", { source: "result_page" });
 
+    let message = "✅已复制";
     try {
-      await navigator.clipboard?.writeText(window.location.href);
+      if (!navigator.clipboard?.writeText) throw new Error("Clipboard API unavailable");
+      await navigator.clipboard.writeText(window.location.href);
     } catch {
-      // Some in-app browsers block clipboard access; the button still confirms the attempted share action.
+      const fallbackInput = document.createElement("textarea");
+      fallbackInput.value = window.location.href;
+      fallbackInput.setAttribute("readonly", "");
+      fallbackInput.style.position = "fixed";
+      fallbackInput.style.left = "-9999px";
+      fallbackInput.style.top = "0";
+      document.body.appendChild(fallbackInput);
+      fallbackInput.select();
+      const copied = document.execCommand("copy");
+      document.body.removeChild(fallbackInput);
+      if (!copied) message = "复制失败，请手动复制链接";
     }
 
-    setShowCopiedFeedback(true);
+    setToastMessage(message);
     if (copiedTimerRef.current) window.clearTimeout(copiedTimerRef.current);
-    copiedTimerRef.current = window.setTimeout(() => setShowCopiedFeedback(false), 3000);
+    copiedTimerRef.current = window.setTimeout(() => setToastMessage(""), 3000);
   };
 
-  return { showCopiedFeedback, shareResult };
+  return { toastMessage, shareResult };
 }
 
 function SpecialResultPage({
@@ -357,7 +369,7 @@ function SpecialResultPage({
   result: { name: string; englishName: string; body: string };
   onRestart: () => void;
 }) {
-  const { showCopiedFeedback, shareResult } = useShareFeedback();
+  const { toastMessage, shareResult } = useShareFeedback();
 
   return h("main", { className: "special-result-page result-page relative overflow-y-auto bg-white px-4 pb-7 pt-4" },
     h(PhoneStatus),
@@ -394,14 +406,14 @@ function SpecialResultPage({
       className: "mx-auto mt-4 block text-xs text-black/45 underline underline-offset-4"
     }, "重新测试"),
     h(ResultDisclaimer),
-    h("div", { className: `result-toast ${showCopiedFeedback ? "result-toast-visible" : ""}`, role: "status", "aria-live": "polite" }, "✅已复制")
+    h("div", { className: `result-toast ${toastMessage ? "result-toast-visible" : ""}`, role: "status", "aria-live": "polite" }, toastMessage)
   );
 }
 
 function FinalResultPage({
   calculatedResult,
   activePopup,
-  onOpenPopup,
+  onOpenPopup: _onOpenPopup,
   onClosePopup,
   onRestart
 }: {
@@ -413,64 +425,113 @@ function FinalResultPage({
 }) {
   const parts = getResultParts(calculatedResult);
   const personaImage = personaImages[calculatedResult.personaImageKey] || personaImages[parts.persona.id] || personaImages.STAR;
-  const hiddenTitle = parts.badges.length > 1 ? "特别勋章解读" : parts.badges[0]?.name || "特别勋章解读";
-  const { showCopiedFeedback, shareResult } = useShareFeedback();
+  const badges = parts.badges.length
+    ? parts.badges
+    : [{ id: "NONE", name: "暂未触发特别勋章", englishName: "NONE", declaration: "这次没有触发额外特别勋章。", body: ["你这次没有触发额外特别勋章，结果会以主人格和行动锦囊为主。"] }];
+  const captureRef = React.useRef<HTMLElement | null>(null);
+  const [isSaving, setIsSaving] = React.useState(false);
+  const { toastMessage, shareResult } = useShareFeedback();
 
-  return h("main", { className: "result-page relative min-h-screen overflow-y-auto bg-white px-4 pb-7 pt-4" },
-    h(PhoneStatus),
-    h("section", { className: "relative mx-auto max-w-[430px] px-2 pt-6 text-center" },
-      h("h1", { className: "result-title font-cn font-semibold text-black" }, `${parts.persona.name} ${parts.persona.englishName}`),
-      h("div", { className: "result-key-elements", "aria-hidden": "true" },
-        h("span", { className: "result-pill result-pill-left" }, "✦"),
-        h("span", { className: "result-squiggle result-squiggle-left" }, "}"),
-        h("span", { className: "result-squiggle result-squiggle-right" }, "{"),
-        h("span", { className: "result-bubble" })
-      ),
-      h("figure", { className: "result-avatar-wrap mx-auto mt-5 flex h-[184px] w-[184px] items-center justify-center rounded-full bg-[#fbf0ed]" },
-        h("img", {
-          src: personaImage,
-          alt: `${parts.persona.name}人格形象`,
-          className: "result-avatar"
-        })
-      ),
-      h("div", { className: "result-chip-row mt-5 flex flex-wrap justify-center" },
-        parts.persona.tags.map((tag, index) => h("span", { key: tag, className: "result-chip" },
-          h("span", { className: "result-chip-icon", "aria-hidden": "true" }, chipIcons[index % chipIcons.length]),
-          tag
-        )),
-        calculatedResult.badges.includes("HARD") && h("span", { className: "result-chip" },
-          h("span", { className: "result-chip-icon", "aria-hidden": "true" }, chipIcons[3]),
-          "DISABILITY"
+  const saveFullResult = async () => {
+    if (!captureRef.current || isSaving) return;
+
+    setIsSaving(true);
+    try {
+      const canvas = await html2canvas(captureRef.current, {
+        backgroundColor: "#ffffff",
+        scale: Math.min(window.devicePixelRatio || 2, 3),
+        useCORS: true,
+        windowWidth: captureRef.current.scrollWidth,
+        windowHeight: captureRef.current.scrollHeight
+      });
+      const url = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `REDI-${calculatedResult.personaImageKey}.png`;
+      link.click();
+      track("image_saved", { persona: calculatedResult.mainPersona.id, source: "full_result_page" });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  return h("main", { className: "result-page result-page-redesign" },
+    h("article", { ref: captureRef, className: "result-export-surface" },
+      h("section", { className: "result-hero-panel" },
+        h(PhoneStatus),
+        h("h1", { className: "result-title" }, `${parts.persona.name} · ${parts.persona.englishName}`),
+        h("figure", { className: "result-character-stage" },
+          h("span", { className: "result-deco result-deco-left", "aria-hidden": "true" }, "{"),
+          h("img", {
+            src: personaImage,
+            alt: `${parts.persona.name}人格形象`,
+            className: "result-avatar"
+          }),
+          h("span", { className: "result-deco result-deco-right", "aria-hidden": "true" }, "}")
         )
       ),
-      h("blockquote", { className: "mx-auto mt-5 max-w-[372px] rounded-2xl bg-gradient-to-r from-[#fde3f4] to-[#cdf4f7] px-7 py-5 text-left" },
-        h("p", { className: "border-l-4 border-white/80 pl-5 font-cn text-[1.5rem] font-semibold leading-snug text-black" }, `“${parts.persona.declaration}”`)
+      h("section", { className: "result-content-flow" },
+        h("blockquote", { className: "result-declaration" },
+          h("p", null, `“${parts.persona.declaration}”`)
+        ),
+        h("div", { className: "result-chip-row", "aria-label": "人格标签" },
+          parts.persona.tags.map((tag, index) => h("span", { key: tag, className: "result-chip" },
+            h("span", { className: "result-chip-icon", "aria-hidden": "true" }, chipIcons[index % chipIcons.length]),
+            tag
+          ))
+        ),
+        h("section", { className: "result-profile", "aria-label": "人格档案" },
+          parts.persona.body.map((paragraph) => h("p", { key: paragraph }, paragraph))
+        ),
+        h("div", { className: "result-blue-divider", "aria-hidden": "true" },
+          h("span", null),
+          h("span", null),
+          h("span", null),
+          h("span", null)
+        ),
+        h("section", { className: "result-card-section result-action-section", "aria-label": "经期行动小锦囊" },
+          h("article", { className: "result-info-card result-action-card" },
+            h("h2", null, "经期活动小锦囊"),
+            h("h3", null, parts.actionKit.name),
+            h("p", null, parts.actionKit.declaration),
+            parts.actionKit.body.map((paragraph) => h("p", { key: paragraph }, paragraph))
+          ),
+          parts.actionKit.tips.map((tip, index) => h("article", { key: tip, className: "result-info-card result-action-card" },
+            h("h2", null, "经期活动小锦囊"),
+            h("h3", null, `${parts.actionKit.name} ${index + 1}`),
+            h("p", null, tip)
+          ))
+        ),
+        h("section", { className: "result-card-section result-medal-section", "aria-label": "特别勋章解读" },
+          badges.map((badge) => h("article", { key: badge.id, className: "result-info-card result-medal-card" },
+            h("h2", null, "特别勋章解读"),
+            h("h3", null, `${badge.name} · ${badge.englishName}`),
+            "declaration" in badge && h("p", null, badge.declaration),
+            badge.body.map((paragraph) => h("p", { key: paragraph }, paragraph))
+          ))
+        ),
+        h("footer", { className: "result-actions" },
+          h("button", {
+            type: "button",
+            onClick: saveFullResult,
+            disabled: isSaving,
+            className: "result-footer-button result-save-button"
+          }, "一键长图保存"),
+          h("button", {
+            type: "button",
+            onClick: shareResult,
+            className: "result-footer-button result-footer-share"
+          }, "复制链接分享")
+        ),
+        h("button", {
+          type: "button",
+          onClick: onRestart,
+          className: "result-restart"
+        }, "重新测试"),
+        h(ResultDisclaimer)
       )
     ),
-    h("section", { className: "result-card-stack relative mx-auto mt-5", "aria-label": "结果详情入口" },
-      h(TiltCard, { className: "result-stack-card result-card-persona", label: "人格档案", onClick: () => onOpenPopup("persona") }),
-      h(TiltCard, { className: "result-stack-card result-card-action", label: "经期行动小锦囊", onClick: () => onOpenPopup("action") }),
-      h(TiltCard, { className: "result-stack-card result-card-hidden", label: hiddenTitle, onClick: () => onOpenPopup("hidden") })
-    ),
-    h("footer", { className: "mx-auto mt-2 grid max-w-[410px] grid-cols-2 gap-6 px-3" },
-      h("button", {
-        type: "button",
-        onClick: () => onOpenPopup("save"),
-        className: "result-footer-button rounded-lg px-4 py-4 text-sm font-medium text-black outline-none transition hover:-translate-y-0.5 focus-visible:ring-4 focus-visible:ring-[#77d8df]/45"
-      }, "一键长图保存"),
-      h("button", {
-        type: "button",
-        onClick: shareResult,
-        className: "result-footer-button result-footer-share rounded-lg px-4 py-4 text-sm font-medium text-black outline-none transition hover:-translate-y-0.5 focus-visible:ring-4 focus-visible:ring-[#77d8df]/45"
-      }, "复制链接分享")
-    ),
-    h("button", {
-      type: "button",
-      onClick: onRestart,
-      className: "mx-auto mt-4 block text-xs text-black/45 underline underline-offset-4"
-    }, "重新测试"),
-    h(ResultDisclaimer),
-    h("div", { className: `result-toast ${showCopiedFeedback ? "result-toast-visible" : ""}`, role: "status", "aria-live": "polite" }, "✅已复制"),
+    h("div", { className: `result-toast ${toastMessage ? "result-toast-visible" : ""}`, role: "status", "aria-live": "polite" }, toastMessage),
     activePopup && h(ResultPopup, { type: activePopup, parts, calculatedResult, onClose: onClosePopup })
   );
 }

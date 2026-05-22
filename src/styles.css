@@ -1241,6 +1241,380 @@ button {
   }
 }
 
+.result-page-redesign {
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #ffffff;
+  color: #111111;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.result-page-redesign::-webkit-scrollbar {
+  display: none;
+}
+
+.result-export-surface {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.result-hero-panel {
+  position: relative;
+  overflow: hidden;
+  padding: max(18px, env(safe-area-inset-top)) 18px clamp(22px, 5.6vw, 34px);
+  text-align: center;
+  background:
+    linear-gradient(176deg, rgba(255, 255, 255, 0) 0 72%, #ffffff 73% 100%),
+    linear-gradient(180deg, #9be2e8 0%, #d9eff6 62%, #f8edf8 100%);
+}
+
+.result-page-redesign .phone-status-spacer {
+  min-height: clamp(34px, 8.8vw, 58px);
+}
+
+.result-page-redesign .result-title {
+  position: relative;
+  z-index: 2;
+  margin: 0 auto;
+  max-width: min(420px, calc(100vw - 48px));
+  font-family: "ChillDIN", "Source Han Sans SC", "Noto Sans CJK SC", "PingFang SC", system-ui, sans-serif;
+  font-size: clamp(1.38rem, 6vw, 1.9rem);
+  font-weight: 800;
+  line-height: 1.16;
+  letter-spacing: 0;
+  color: #0b0d0e;
+}
+
+.result-character-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 430px);
+  min-height: clamp(264px, 72vw, 370px);
+  margin: clamp(12px, 3vw, 18px) auto 0;
+  isolation: isolate;
+}
+
+.result-page-redesign .result-avatar {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: min(78vw, 330px);
+  max-height: clamp(260px, 72vw, 370px);
+  object-fit: contain;
+  object-position: center top;
+  clip-path: circle(49% at 50% 50%);
+  filter: drop-shadow(0 18px 22px rgba(54, 102, 112, 0.12));
+}
+
+.result-deco {
+  position: absolute;
+  z-index: 1;
+  top: 45%;
+  color: rgba(255, 255, 255, 0.96);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(6.6rem, 24vw, 10.5rem);
+  font-weight: 400;
+  line-height: 1;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.result-deco-left {
+  left: clamp(2px, 4vw, 30px);
+}
+
+.result-deco-right {
+  right: clamp(2px, 4vw, 30px);
+}
+
+.result-content-flow {
+  width: min(100%, 520px);
+  margin: 0 auto;
+  padding: clamp(28px, 6vw, 42px) 28px max(36px, env(safe-area-inset-bottom));
+  text-align: center;
+}
+
+.result-page-redesign .result-declaration {
+  max-width: 440px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  border: 0;
+  background: transparent !important;
+  text-align: center;
+}
+
+.result-page-redesign .result-declaration p {
+  margin: 0;
+  border: 0;
+  padding: 0 !important;
+  font-family: "ChillDIN", "Source Han Sans SC", "Noto Sans CJK SC", "PingFang SC", system-ui, sans-serif;
+  font-size: clamp(1.92rem, 8.8vw, 3rem);
+  font-weight: 800;
+  line-height: 1.26;
+  letter-spacing: 0;
+  color: #090909;
+}
+
+.result-page-redesign .result-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 9px 18px;
+  margin: clamp(28px, 6vw, 38px) auto 0 !important;
+  max-width: 430px;
+}
+
+.result-page-redesign .result-chip {
+  display: inline-flex;
+  min-height: 24px;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border-radius: 999px;
+  background: #dddddd;
+  padding: 4px 12px;
+  font-family: "Source Han Sans SC", "Noto Sans CJK SC", "PingFang SC", system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #111111;
+  white-space: nowrap;
+}
+
+.result-page-redesign .result-chip:nth-child(1) {
+  background: #f8dff3;
+}
+
+.result-profile {
+  max-width: 390px;
+  margin: clamp(42px, 9vw, 62px) auto 0;
+  font-family: "ChillDIN", "Source Han Sans SC", "Noto Sans CJK SC", "PingFang SC", system-ui, sans-serif;
+  font-size: clamp(1.04rem, 4.3vw, 1.24rem);
+  font-weight: 500;
+  line-height: 1.62;
+  color: rgba(0, 0, 0, 0.86);
+}
+
+.result-profile p {
+  margin: 0;
+}
+
+.result-profile p + p {
+  margin-top: 0.2em;
+}
+
+.result-blue-divider {
+  position: relative;
+  display: grid;
+  width: 68px;
+  height: 68px;
+  margin: clamp(30px, 8vw, 48px) auto clamp(28px, 6.5vw, 42px);
+  place-items: center;
+  pointer-events: none;
+}
+
+.result-blue-divider span {
+  position: absolute;
+  width: 22px;
+  height: 36px;
+  border-radius: 999px 999px 12px 12px;
+  background: #75d8df;
+  transform-origin: 50% 100%;
+}
+
+.result-blue-divider span:nth-child(1) {
+  transform: translateY(-17px);
+}
+
+.result-blue-divider span:nth-child(2) {
+  transform: rotate(90deg) translateY(-17px);
+}
+
+.result-blue-divider span:nth-child(3) {
+  transform: rotate(180deg) translateY(-17px);
+}
+
+.result-blue-divider span:nth-child(4) {
+  transform: rotate(270deg) translateY(-17px);
+}
+
+.result-card-section {
+  display: grid;
+  gap: 18px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.result-card-section + .result-card-section {
+  margin-top: 18px;
+}
+
+.result-info-card {
+  border-radius: 20px;
+  padding: 24px 24px 26px;
+  text-align: left;
+  font-family: "Source Han Sans SC", "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  color: rgba(0, 0, 0, 0.78);
+}
+
+.result-action-card {
+  background: linear-gradient(115deg, #f8ddef 0%, #caeef3 100%);
+}
+
+.result-medal-card {
+  background: #f2c2e3;
+}
+
+.result-info-card h2 {
+  margin: 0 0 16px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.35;
+  color: rgba(0, 0, 0, 0.58);
+}
+
+.result-info-card h3 {
+  margin: 0 0 7px;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.38;
+  color: rgba(0, 0, 0, 0.84);
+}
+
+.result-info-card p {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: rgba(0, 0, 0, 0.78);
+}
+
+.result-info-card p + p {
+  margin-top: 4px;
+}
+
+.result-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(18px, 6vw, 34px);
+  margin: clamp(44px, 9vw, 60px) auto 0;
+}
+
+.result-page-redesign .result-footer-button {
+  display: inline-flex;
+  min-width: 0;
+  min-height: 62px;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #f1bde2;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 12px 8px;
+  font-family: "Source Han Sans SC", "Noto Sans CJK SC", "PingFang SC", system-ui, sans-serif;
+  font-size: clamp(0.98rem, 4.2vw, 1.18rem);
+  font-weight: 400;
+  line-height: 1.2;
+  color: rgba(0, 0, 0, 0.8);
+  outline: none;
+  transition: transform 160ms ease, opacity 160ms ease;
+}
+
+.result-page-redesign .result-footer-button:active {
+  transform: translateY(1px);
+}
+
+.result-page-redesign .result-footer-button:disabled {
+  opacity: 0.58;
+}
+
+.result-page-redesign .result-footer-share {
+  border-color: #70d7df;
+}
+
+.result-restart {
+  display: block;
+  margin: 18px auto 0;
+  border: 0;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.38);
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.result-page-redesign .result-disclaimer {
+  max-width: 430px;
+  margin: 20px auto 0;
+  padding: 0;
+  text-align: left;
+  font-family: "Source Han Sans SC", "Noto Sans CJK SC", "PingFang SC", system-ui, sans-serif;
+  font-size: 10px;
+  line-height: 1.55;
+  color: rgba(0, 0, 0, 0.36);
+}
+
+@media (max-width: 390px) {
+  .result-hero-panel {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .result-content-flow {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .result-page-redesign .result-avatar {
+    width: min(82vw, 300px);
+  }
+
+  .result-deco {
+    font-size: clamp(5.5rem, 22vw, 7.8rem);
+    opacity: 0.88;
+  }
+
+  .result-deco-left {
+    left: -2px;
+  }
+
+  .result-deco-right {
+    right: -2px;
+  }
+
+  .result-info-card {
+    border-radius: 18px;
+    padding: 22px 20px 24px;
+  }
+
+  .result-actions {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 340px) {
+  .result-deco {
+    display: none;
+  }
+
+  .result-page-redesign .result-footer-button {
+    font-size: 0.92rem;
+  }
+}
+
 .period-ghost {
   position: absolute;
   inset: -6% -20% auto -20%;
