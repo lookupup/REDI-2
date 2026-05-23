@@ -1290,10 +1290,7 @@ button {
   overflow: visible;
   padding: max(18px, env(safe-area-inset-top)) 18px clamp(60px, 14vw, 90px);
   text-align: center;
-  background:
-    linear-gradient(168deg, transparent 72%, rgba(255, 200, 235, 0.45) 84%, rgba(255, 210, 240, 0.25) 92%, transparent 100%),
-    linear-gradient(180deg, #7dd8e8 0%, #a8e4ef 40%, #c8eff5 70%, #ddf3f7 100%);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 88%);
+  background: linear-gradient(180deg, #7dd8e8 0%, #a8e4ef 40%, #c8eff5 72%, #d8f0f5 100%);
   z-index: 1;
 }
 
@@ -1361,10 +1358,27 @@ button {
 }
 
 .result-content-flow {
+  position: relative;
   width: min(100%, 520px);
   margin: 0 auto;
-  padding: clamp(70px, 18vw, 110px) 28px max(36px, env(safe-area-inset-bottom));
+  padding: clamp(80px, 20vw, 120px) 28px max(36px, env(safe-area-inset-bottom));
   text-align: center;
+  z-index: 2;
+}
+
+.result-content-flow::before {
+  content: "";
+  position: absolute;
+  top: -80px;
+  left: -100vw;
+  right: -100vw;
+  bottom: 0;
+  background:
+    linear-gradient(to bottom right, rgba(255, 200, 235, 0.4) 0%, rgba(255, 215, 245, 0.2) 18%, transparent 35%),
+    #ffffff;
+  clip-path: polygon(0 80px, 100% 0, 100% 100%, 0 100%);
+  z-index: -1;
+  pointer-events: none;
 }
 
 .result-page-redesign .result-declaration {
@@ -1595,12 +1609,6 @@ button {
   .result-content-flow {
     padding-left: 22px;
     padding-right: 22px;
-  }
-
-  .result-page-redesign .result-avatar {
-    width: min(88vw, 334px);
-    max-height: clamp(286px, 82vw, 374px);
-    transform: translateY(clamp(12px, 4.2vw, 20px));
   }
 
   .result-deco {
