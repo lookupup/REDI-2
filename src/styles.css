@@ -505,12 +505,17 @@ button {
 .special-avatar-wrap {
   height: 224px;
   width: 224px;
-  overflow: hidden;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
 }
 
 .special-avatar {
   width: 210px;
   height: 210px;
+  background: transparent;
+  object-fit: contain;
   object-position: center;
 }
 
@@ -922,19 +927,21 @@ button {
 .save-avatar-wrap {
   margin: 0 auto;
   display: flex;
-  height: 128px;
-  width: 128px;
+  width: min(78vw, 300px);
   align-items: flex-start;
   justify-content: center;
-  border-radius: 999px;
-  background: #fbf0ed;
-  overflow: hidden;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
 }
 
 .save-avatar {
-  height: 118%;
-  width: 118%;
-  object-fit: cover;
+  display: block;
+  width: 100%;
+  height: auto;
+  background: transparent;
+  object-fit: contain;
   object-position: center top;
 }
 
@@ -1323,9 +1330,10 @@ button {
   display: block;
   width: min(78vw, 330px);
   max-height: clamp(260px, 72vw, 370px);
+  height: auto;
+  background: transparent;
   object-fit: contain;
   object-position: center top;
-  clip-path: circle(49% at 50% 50%);
   filter: drop-shadow(0 18px 22px rgba(54, 102, 112, 0.12));
 }
 

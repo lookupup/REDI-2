@@ -381,7 +381,7 @@ function SpecialResultPage({
         h("span", { className: "result-squiggle result-squiggle-right" }, "{"),
         h("span", { className: "result-bubble" })
       ),
-      h("figure", { className: "special-avatar-wrap mx-auto mt-5 flex items-center justify-center rounded-full bg-[#fbf0ed]" },
+      h("figure", { className: "special-avatar-wrap mx-auto mt-5 flex items-center justify-center" },
         h("img", {
           src: specialResultImage,
           alt: `${result.name} ${result.englishName}人格形象`,
