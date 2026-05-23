@@ -96,8 +96,8 @@ button {
   padding-top: max(clamp(18px, 3.2dvh, 34px), env(safe-area-inset-top));
   padding-bottom: max(clamp(18px, 3.2dvh, 34px), env(safe-area-inset-bottom));
   background:
-    radial-gradient(circle at 50% 33%, rgba(255, 255, 255, 0.38) 0 18%, rgba(255, 255, 255, 0.12) 45%, rgba(255, 255, 255, 0) 62%),
-    linear-gradient(180deg, #fff0fa 0%, #fde8f6 42%, #f6c7e9 72%, #ed9ed8 88%, #69d7df 100%);
+    radial-gradient(circle at 50% 28%, rgba(255, 255, 255, 0.46) 0 20%, rgba(255, 255, 255, 0.2) 46%, rgba(255, 255, 255, 0) 68%),
+    linear-gradient(180deg, #ffffff 0%, #fff8fd 24%, #fce2f5 58%, #f1b7e6 84%, #bfe3f2 100%);
 }
 
 .cover-main {
@@ -140,11 +140,14 @@ button {
 .cover-start-button {
   position: relative;
   z-index: 10;
-  width: min(112px, 29vw);
+  display: inline-flex;
+  width: min(40vw, 240px);
+  min-width: 188px;
   margin-top: clamp(2px, 0.6svh, 6px);
   margin-bottom: 0;
   border: 0;
   background: transparent;
+  padding: 0;
   box-shadow: none;
   color: #111;
   cursor: pointer;
@@ -165,19 +168,23 @@ button {
 
 .cover-start-pulse {
   display: flex;
-  min-height: 52px;
+  width: 100%;
+  min-height: clamp(58px, 8.8svh, 72px);
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
-  background: transparent;
-  font-size: 1.04rem;
-  font-weight: 700;
+  border-radius: 18px;
+  background: rgba(255, 238, 249, 0.82);
+  padding: 16px clamp(30px, 8vw, 56px);
+  font-family: "ChillDIN", "Noto Serif SC", "Songti SC", serif;
+  font-size: clamp(1.54rem, 7vw, 2rem);
+  font-weight: 500;
+  line-height: 1;
   box-shadow: none;
-  animation: cover-start-breathe 1.9s ease-in-out infinite;
+  animation: cover-start-breathe 2.4s ease-in-out infinite;
 }
 
 .cover-start-button:hover .cover-start-pulse {
-  opacity: 0.92;
+  background: rgba(255, 238, 249, 0.9);
 }
 
 .cover-start-button:focus-visible .cover-start-pulse {
@@ -1218,9 +1225,11 @@ button {
   0%,
   100% {
     transform: scale(1);
+    opacity: 0.96;
   }
   50% {
-    transform: scale(1.03);
+    transform: scale(1.025);
+    opacity: 1;
   }
 }
 
