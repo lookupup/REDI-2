@@ -1284,8 +1284,8 @@ button {
   padding: max(18px, env(safe-area-inset-top)) 18px clamp(22px, 5.6vw, 34px);
   text-align: center;
   background:
-    linear-gradient(176deg, rgba(255, 255, 255, 0) 0 72%, #ffffff 73% 100%),
-    linear-gradient(180deg, #9be2e8 0%, #d9eff6 62%, #f8edf8 100%);
+    linear-gradient(176deg, rgba(255, 255, 255, 0) 0 80%, rgba(255, 255, 255, 0.72) 90%, #ffffff 100%),
+    linear-gradient(180deg, #94dfe6 0%, #bfe7ee 38%, #e3eaf4 68%, #fbedf8 100%);
 }
 
 .result-page-redesign .phone-status-spacer {
