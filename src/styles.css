@@ -1426,50 +1426,28 @@ button {
   margin-top: 0.2em;
 }
 
-.result-blue-divider {
-  position: relative;
-  display: grid;
-  width: 68px;
-  height: 68px;
-  margin: clamp(30px, 8vw, 48px) auto clamp(28px, 6.5vw, 42px);
-  place-items: center;
+.result-flower-divider {
+  display: flex;
+  justify-content: center;
+  margin: clamp(30px, 8vw, 48px) auto clamp(18px, 5vw, 28px);
   pointer-events: none;
 }
 
-.result-blue-divider span {
-  position: absolute;
-  width: 22px;
-  height: 36px;
-  border-radius: 999px 999px 12px 12px;
-  background: #75d8df;
-  transform-origin: 50% 100%;
-}
-
-.result-blue-divider span:nth-child(1) {
-  transform: translateY(-17px);
-}
-
-.result-blue-divider span:nth-child(2) {
-  transform: rotate(90deg) translateY(-17px);
-}
-
-.result-blue-divider span:nth-child(3) {
-  transform: rotate(180deg) translateY(-17px);
-}
-
-.result-blue-divider span:nth-child(4) {
-  transform: rotate(270deg) translateY(-17px);
+.result-flower-divider img {
+  display: block;
+  width: clamp(72px, 18vw, 96px);
+  height: auto;
 }
 
 .result-card-section {
   display: grid;
-  gap: 18px;
+  gap: 15px;
   width: 100%;
   margin: 0 auto;
 }
 
 .result-card-section + .result-card-section {
-  margin-top: 18px;
+  margin-top: 15px;
 }
 
 .result-info-card {
@@ -1516,11 +1494,32 @@ button {
   margin-top: 4px;
 }
 
+.result-card-lead {
+  margin-top: 4px;
+}
+
+.result-card-list {
+  margin: 0;
+  padding-left: 1.25em;
+}
+
+.result-card-list li {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: rgba(0, 0, 0, 0.78);
+}
+
+.result-card-closing {
+  margin-top: 4px;
+}
+
 .result-actions {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(18px, 6vw, 34px);
-  margin: clamp(44px, 9vw, 60px) auto 0;
+  margin: clamp(28px, 7vw, 36px) auto 0;
 }
 
 .result-page-redesign .result-footer-button {

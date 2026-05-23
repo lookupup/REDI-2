@@ -36,6 +36,7 @@ const homePadImage = new URL("../assets/reference/home-pad-labeled.png", import.
 const q0DropImage = new URL("../assets/reference/q0-drop.png", import.meta.url).toString();
 const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 const specialResultImage = publicAsset("images/personas/common.png");
+const resultFlowerImage = publicAsset("images/flower.png");
 const resultDisclaimer = "*本测试仅为趣味互动工具，旨在帮助你觉察月经相关感受，不能作为医学诊断依据。如有持续周期异常、剧烈疼痛或其他不适，请及时前往正规医院咨询。";
 
 const initialState: AppState = {
@@ -482,24 +483,20 @@ function FinalResultPage({
         h("section", { className: "result-profile", "aria-label": "人格档案" },
           parts.persona.body.map((paragraph) => h("p", { key: paragraph }, paragraph))
         ),
-        h("div", { className: "result-blue-divider", "aria-hidden": "true" },
-          h("span", null),
-          h("span", null),
-          h("span", null),
-          h("span", null)
+        h("div", { className: "result-flower-divider", "aria-hidden": "true" },
+          h("img", { src: resultFlowerImage, alt: "" })
         ),
         h("section", { className: "result-card-section result-action-section", "aria-label": "经期行动小锦囊" },
           h("article", { className: "result-info-card result-action-card" },
             h("h2", null, "经期活动小锦囊"),
             h("h3", null, parts.actionKit.name),
-            h("p", null, parts.actionKit.declaration),
-            parts.actionKit.body.map((paragraph) => h("p", { key: paragraph }, paragraph))
-          ),
-          parts.actionKit.tips.map((tip, index) => h("article", { key: tip, className: "result-info-card result-action-card" },
-            h("h2", null, "经期活动小锦囊"),
-            h("h3", null, `${parts.actionKit.name} ${index + 1}`),
-            h("p", null, tip)
-          ))
+            parts.actionKit.body.map((paragraph) => h("p", { key: paragraph }, paragraph)),
+            h("p", { className: "result-card-lead" }, "可以试着："),
+            h("ul", { className: "result-card-list" },
+              parts.actionKit.tips.map((tip) => h("li", { key: tip }, tip))
+            ),
+            h("p", { className: "result-card-closing" }, parts.actionKit.declaration)
+          )
         ),
         h("section", { className: "result-card-section result-medal-section", "aria-label": "特别勋章解读" },
           badges.map((badge) => h("article", { key: badge.id, className: "result-info-card result-medal-card" },
