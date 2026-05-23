@@ -518,7 +518,9 @@ button {
   object-fit: contain;
   object-position: center;
 }
-
+.special-result-footer {
+  margin-top: clamp(32px, 8vw, 48px);
+}
 .special-result-card {
   position: relative;
   margin-top: 38px;
