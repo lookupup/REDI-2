@@ -768,7 +768,7 @@ button {
     min-height: 58px;
   }
 
-  .result-page footer {
+  .result-page:not(.result-page-redesign) footer {
     margin-top: 2px !important;
   }
 }
