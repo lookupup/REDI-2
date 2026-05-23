@@ -1281,7 +1281,7 @@ button {
   min-height: 100vh;
   min-height: 100svh;
   min-height: 100dvh;
-  overflow: hidden;
+  overflow: visible;
   background: #ffffff;
 }
 
@@ -1291,9 +1291,10 @@ button {
   padding: max(18px, env(safe-area-inset-top)) 18px clamp(60px, 14vw, 90px);
   text-align: center;
   background:
-    radial-gradient(ellipse 80% 18% at 60% 96%, rgba(255, 210, 240, 0.55) 0%, transparent 100%),
+    linear-gradient(168deg, transparent 72%, rgba(255, 200, 235, 0.45) 84%, rgba(255, 210, 240, 0.25) 92%, transparent 100%),
     linear-gradient(180deg, #7dd8e8 0%, #a8e4ef 40%, #c8eff5 70%, #ddf3f7 100%);
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 88%);
+  z-index: 1;
 }
 
 .result-page-redesign .phone-status-spacer {
@@ -1321,8 +1322,7 @@ button {
   width: min(100%, 460px);
   min-height: clamp(300px, 80vw, 420px);
   margin: clamp(6px, 2vw, 14px) auto 0;
-  isolation: isolate;
-  z-index: 2;
+  z-index: 10;
 }
 
 .result-page-redesign .result-avatar {
