@@ -1316,11 +1316,11 @@ button {
 .result-character-stage {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  width: min(100%, 430px);
-  min-height: clamp(264px, 72vw, 370px);
-  margin: clamp(12px, 3vw, 18px) auto 0;
+  width: min(100%, 460px);
+  min-height: clamp(286px, 76vw, 398px);
+  margin: clamp(6px, 2vw, 14px) auto 0;
   isolation: isolate;
 }
 
@@ -1328,13 +1328,14 @@ button {
   position: relative;
   z-index: 2;
   display: block;
-  width: min(78vw, 330px);
-  max-height: clamp(260px, 72vw, 370px);
+  width: min(86vw, 360px);
+  max-height: clamp(282px, 78vw, 398px);
   height: auto;
   background: transparent;
   object-fit: contain;
   object-position: center top;
   filter: drop-shadow(0 18px 22px rgba(54, 102, 112, 0.12));
+  transform: translateY(clamp(14px, 3.8vw, 24px));
 }
 
 .result-deco {
@@ -1596,7 +1597,9 @@ button {
   }
 
   .result-page-redesign .result-avatar {
-    width: min(82vw, 300px);
+    width: min(88vw, 334px);
+    max-height: clamp(286px, 82vw, 374px);
+    transform: translateY(clamp(12px, 4.2vw, 20px));
   }
 
   .result-deco {
