@@ -393,7 +393,7 @@ function SpecialResultPage({
       h("h2", { className: "font-cn" }, "人格档案"),
       h("p", null, result.body)
     ),
-    h("footer", { className: "mx-auto mt-6 max-w-[210px]" },
+    h("footer", { className: "mx-auto mt-11 max-w-[210px]" },
       h("button", {
         type: "button",
         onClick: shareResult,
