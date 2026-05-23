@@ -1473,7 +1473,7 @@ button {
 }
 
 .result-medal-card {
-  background: #f2c2e3;
+  background: linear-gradient(115deg, #f8ddef 0%, #caeef3 100%);
 }
 
 .result-info-card h2 {
