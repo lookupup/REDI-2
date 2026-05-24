@@ -58,17 +58,17 @@ const specialResults: Record<SpecialResultId, { name: string; englishName: strin
   BLANK: {
     name: "潜力新星",
     englishName: "BLANK",
-    body: "你正站在名为“成长”的后台，听着序曲，带着对未知的一丝好奇。属于你的剧本还是一片干净的留白，别着急，你的精彩开场，永远值得期待。"
+    body: "你正站在名为“成长”的后台，\n听着序曲，带着对未知的一丝好奇。\n属于你的剧本还是一片干净的留白，\n别着急，你的精彩开场，\n永远值得期待。"
   },
   ALLY: {
     name: "月经同盟",
     englishName: "ALLY",
-    body: "你虽不登台，但你能成为最坚实的后援，你用理解与行动，为身边人的每一种状态撑腰。"
+    body: "你虽不登台，但你能成为最坚实的后援，\n你用理解与行动，\n为身边人的每一种状态撑腰。"
   },
   FREE: {
-    name: "狂野艺术家",
+    name: "旷野艺术家",
     englishName: "FREE",
-    body: "有些身体不以周期为线索。有些经历本就不同于主流叙事。\n你的身体不需要符合任何模板，它自有风景。"
+    body: "有些身体不以周期为线索。\n有些经历本就不同于主流叙事。\n你的身体不需要符合任何模板，\n它自有风景。"
   }
 };
 
@@ -399,7 +399,7 @@ function SpecialResultPage({
         h("img", { src: resultFlowerImage, alt: "" })
       ),
       h("section", { className: "special-result-profile", "aria-label": "人格档案" },
-        result.body.split("\n").map((paragraph) => h("p", { key: paragraph }, paragraph))
+        h("p", null, result.body)
       ),
       h("footer", { className: "special-result-actions" },
         h("button", {
