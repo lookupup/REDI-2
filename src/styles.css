@@ -1538,7 +1538,7 @@ button {
 
 .result-card-title-action::before {
   content: "+";
-  background: #c8ecf3;
+  background: #fceaf8;
 }
 
 .result-card-title-medal::before {
