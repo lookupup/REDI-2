@@ -35,8 +35,9 @@ const allQuestions: Question[] = [q0, ...formalQuestions, ...hiddenQuestions];
 const homePadImage = new URL("../assets/reference/home-pad-labeled.png", import.meta.url).toString();
 const q0DropImage = new URL("../assets/reference/q0-drop.png", import.meta.url).toString();
 const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
-const specialResultImage = publicAsset("images/personas/common.png");
 const resultFlowerImage = publicAsset("images/flower.png");
+const resultBracketLeftImage = publicAsset("images/result-bracket-left.png");
+const resultBracketRightImage = publicAsset("images/result-bracket-right.png");
 const resultDisclaimer = "*本测试仅为趣味互动工具，旨在帮助你觉察月经相关感受，不能作为医学诊断依据。如有持续周期异常、剧烈疼痛或其他不适，请及时前往正规医院咨询。";
 
 const initialState: AppState = {
@@ -69,6 +70,12 @@ const specialResults: Record<SpecialResultId, { name: string; englishName: strin
     englishName: "FREE",
     body: "有些身体不以周期为线索。有些经历本就不同于主流叙事。\n你的身体不需要符合任何模板，它自有风景。"
   }
+};
+
+const specialResultImages: Record<SpecialResultId, string> = {
+  BLANK: publicAsset("images/personas/BLANK.png"),
+  ALLY: publicAsset("images/personas/ALLY.png"),
+  FREE: publicAsset("images/personas/FREE.png")
 };
 
 const personaImages: Record<string, string> = {
@@ -188,6 +195,7 @@ function App() {
       onBack: goToPreviousQuestion
     }),
     state.page === "result" && state.specialResultId && h(SpecialResultPage, {
+      resultId: state.specialResultId,
       result: specialResults[state.specialResultId],
       onRestart: () => setState(initialState)
     }),
@@ -363,49 +371,50 @@ function useShareFeedback() {
 }
 
 function SpecialResultPage({
+  resultId,
   result,
   onRestart
 }: {
+  resultId: SpecialResultId;
   result: { name: string; englishName: string; body: string };
   onRestart: () => void;
 }) {
   const { toastMessage, shareResult } = useShareFeedback();
+  const specialImage = specialResultImages[resultId];
 
-  return h("main", { className: "special-result-page result-page relative overflow-y-auto bg-white px-4 pb-7 pt-4" },
-    h(PhoneStatus),
-    h("section", { className: "relative mx-auto max-w-[430px] px-2 pt-6 text-center" },
-      h("h1", { className: "result-title font-cn font-semibold text-black" }, `${result.name} ${result.englishName}`),
-      h("div", { className: "result-key-elements special-key-elements", "aria-hidden": "true" },
-        h("span", { className: "result-pill result-pill-left" }, "✦"),
-        h("span", { className: "result-squiggle result-squiggle-left" }, "}"),
-        h("span", { className: "result-squiggle result-squiggle-right" }, "{"),
-        h("span", { className: "result-bubble" })
-      ),
-      h("figure", { className: "special-avatar-wrap mx-auto mt-5 flex items-center justify-center" },
+  return h("main", { className: "special-result-page result-page result-page-redesign" },
+    h("section", { className: "result-hero-panel special-hero-panel" },
+      h(PhoneStatus),
+      h("h1", { className: "result-title" }, `${result.name} · ${result.englishName}`),
+      h("figure", { className: "special-character-stage" },
         h("img", {
-          src: specialResultImage,
+          src: specialImage,
           alt: `${result.name} ${result.englishName}人格形象`,
-          className: "special-avatar object-contain"
+          className: "special-result-avatar"
         })
       )
     ),
-    h("section", { className: "special-result-card mx-auto" },
-      h("h2", { className: "font-cn" }, "人格档案"),
-      h("p", null, result.body)
-    ),
-    h("footer", { className: "mx-auto max-w-[210px] special-result-footer" },
+    h("section", { className: "special-content-flow" },
+      h("div", { className: "result-flower-divider", "aria-hidden": "true" },
+        h("img", { src: resultFlowerImage, alt: "" })
+      ),
+      h("section", { className: "special-result-profile", "aria-label": "人格档案" },
+        result.body.split("\n").map((paragraph) => h("p", { key: paragraph }, paragraph))
+      ),
+      h("footer", { className: "special-result-actions" },
+        h("button", {
+          type: "button",
+          onClick: shareResult,
+          className: "result-footer-button result-footer-share"
+        }, "复制链接分享")
+      ),
+      h(ResultDisclaimer),
       h("button", {
         type: "button",
-        onClick: shareResult,
-        className: "result-footer-button result-footer-share w-full rounded-lg px-4 py-4 text-sm font-medium text-black outline-none transition hover:-translate-y-0.5 focus-visible:ring-4 focus-visible:ring-[#77d8df]/45"
-      }, "复制链接分享")
+        onClick: onRestart,
+        className: "result-restart"
+      }, "重新测试")
     ),
-    h("button", {
-      type: "button",
-      onClick: onRestart,
-      className: "mx-auto mt-4 block text-xs text-black/45 underline underline-offset-4"
-    }, "重新测试"),
-    h(ResultDisclaimer),
     h("div", { className: `result-toast ${toastMessage ? "result-toast-visible" : ""}`, role: "status", "aria-live": "polite" }, toastMessage)
   );
 }
@@ -461,13 +470,23 @@ function FinalResultPage({
         h(PhoneStatus),
         h("h1", { className: "result-title" }, `${parts.persona.name} · ${parts.persona.englishName}`),
         h("figure", { className: "result-character-stage" },
-          h("span", { className: "result-deco result-deco-left", "aria-hidden": "true" }, "{"),
+          h("img", {
+            src: resultBracketLeftImage,
+            alt: "",
+            className: "result-deco result-deco-left",
+            "aria-hidden": "true"
+          }),
           h("img", {
             src: personaImage,
             alt: `${parts.persona.name}人格形象`,
             className: "result-avatar"
           }),
-          h("span", { className: "result-deco result-deco-right", "aria-hidden": "true" }, "}")
+          h("img", {
+            src: resultBracketRightImage,
+            alt: "",
+            className: "result-deco result-deco-right",
+            "aria-hidden": "true"
+          })
         )
       ),
       h("section", { className: "result-content-flow" },
