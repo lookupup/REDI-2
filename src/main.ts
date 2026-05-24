@@ -488,7 +488,7 @@ function FinalResultPage({
         ),
         h("section", { className: "result-card-section result-action-section", "aria-label": "经期行动小锦囊" },
           h("article", { className: "result-info-card result-action-card" },
-            h("h2", null, "经期活动小锦囊"),
+            h("h2", { className: "result-card-title result-card-title-action" }, "经期活动小锦囊"),
             h("h3", null, parts.actionKit.name),
             parts.actionKit.body.map((paragraph) => h("p", { key: paragraph }, paragraph)),
             h("p", { className: "result-card-lead" }, "可以试着："),
@@ -500,7 +500,7 @@ function FinalResultPage({
         ),
         h("section", { className: "result-card-section result-medal-section", "aria-label": "特别勋章解读" },
           badges.map((badge) => h("article", { key: badge.id, className: "result-info-card result-medal-card" },
-            h("h2", null, "特别勋章解读"),
+            h("h2", { className: "result-card-title result-card-title-medal" }, "特别勋章解读"),
             h("h3", null, `${badge.name} · ${badge.englishName}`),
             "declaration" in badge && h("p", null, badge.declaration),
             badge.body.map((paragraph) => h("p", { key: paragraph }, paragraph))
