@@ -1399,13 +1399,18 @@ button {
   z-index: 1;
   width: min(100%, 520px);
   margin: 0 auto;
-  padding: clamp(46px, 9vw, 62px) 28px max(36px, env(safe-area-inset-bottom));
+  padding: clamp(22px, 5.6vw, 32px) 28px max(36px, env(safe-area-inset-bottom));
   text-align: center;
+}
+
+.special-content-flow .result-flower-divider {
+  margin-top: 0;
+  margin-bottom: clamp(22px, 5.6vw, 32px);
 }
 
 .special-result-profile {
   max-width: min(430px, calc(100vw - 32px));
-  margin: clamp(48px, 10vw, 66px) auto 0;
+  margin: 0 auto;
   text-align: center;
   font-family: "ChillDIN", "Source Han Sans SC", "Noto Sans CJK SC", "PingFang SC", system-ui, sans-serif;
   font-size: 28px;

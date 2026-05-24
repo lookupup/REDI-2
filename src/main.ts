@@ -446,9 +446,7 @@ function FinalResultPage({
 }) {
   const parts = getResultParts(calculatedResult);
   const personaImage = personaImages[calculatedResult.personaImageKey] || personaImages[parts.persona.id] || personaImages.STAR;
-  const badges = parts.badges.length
-    ? parts.badges
-    : [{ id: "NONE", name: "暂未触发特别勋章", englishName: "NONE", declaration: "这次没有触发额外特别勋章。", body: ["你这次没有触发额外特别勋章，结果会以主人格和行动锦囊为主。"] }];
+  const badges = parts.badges;
   const captureRef = React.useRef<HTMLElement | null>(null);
   const [isSaving, setIsSaving] = React.useState(false);
   const { toastMessage, shareResult } = useShareFeedback();
@@ -529,7 +527,7 @@ function FinalResultPage({
             h("p", { className: "result-card-closing" }, parts.actionKit.declaration)
           )
         ),
-        h("section", { className: "result-card-section result-medal-section", "aria-label": "特别勋章解读" },
+        badges.length > 0 && h("section", { className: "result-card-section result-medal-section", "aria-label": "特别勋章解读" },
           badges.map((badge) => h("article", { key: badge.id, className: "result-info-card result-medal-card" },
             h("h2", { className: "result-card-title result-card-title-medal" }, "特别勋章解读"),
             h("h3", null, `${badge.name} · ${badge.englishName}`),
@@ -633,9 +631,7 @@ function SaveImagePopup({
 }) {
   const captureRef = React.useRef<HTMLElement | null>(null);
   const personaImage = personaImages[calculatedResult.personaImageKey] || personaImages[parts.persona.id] || personaImages.STAR;
-  const badges = parts.badges.length
-    ? parts.badges
-    : [{ id: "NONE", name: "暂未触发特别勋章", declaration: "这次没有触发额外特别勋章。", body: ["你这次没有触发额外特别勋章，结果会以主人格和行动锦囊为主。"] }];
+  const badges = parts.badges;
 
   const saveImage = async () => {
     if (!captureRef.current) return;
@@ -685,7 +681,7 @@ function SaveImagePopup({
             parts.actionKit.body.map((paragraph) => h("p", { key: paragraph }, paragraph)),
             h("ul", null, parts.actionKit.tips.map((tip) => h("li", { key: tip }, tip)))
           ),
-          h("section", { className: "save-section save-section-badges" },
+          badges.length > 0 && h("section", { className: "save-section save-section-badges" },
             h("h2", null, "特别勋章解读"),
             badges.map((badge) => h("div", { key: badge.id, className: "save-badge-block" },
               h("h3", null, badge.name),
@@ -728,14 +724,10 @@ function popupContentFor(type: PopupType, parts: ResultParts, calculatedResult: 
   }
 
   if (type === "hidden") {
-    const badges = parts.badges.length
-      ? parts.badges
-      : [{ id: "NONE", name: "暂未触发特别勋章", body: ["你这次没有触发额外特别勋章，结果会以主人格和行动锦囊为主。"] }];
-
     return {
       kicker: "",
       title: "特别勋章解读",
-      body: badges.flatMap((badge) => [`${badge.name} · ${"englishName" in badge ? badge.englishName : badge.id}`, ...badge.body]),
+      body: parts.badges.flatMap((badge) => [`${badge.name} · ${badge.englishName}`, ...badge.body]),
       tips: [] as string[]
     };
   }
