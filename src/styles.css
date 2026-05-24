@@ -1337,12 +1337,26 @@ button {
 
 .special-hero-panel {
   z-index: 2;
+  isolation: isolate;
   padding-bottom: clamp(14px, 4vw, 28px);
+}
+
+.special-hero-panel::before {
+  z-index: 0;
+}
+
+.special-hero-panel::after {
+  z-index: 1;
+}
+
+.special-hero-panel .phone-status-spacer,
+.special-hero-panel .result-title {
+  z-index: 20;
 }
 
 .special-character-stage {
   position: relative;
-  z-index: 10;
+  z-index: 30;
   display: flex;
   width: min(100%, 520px);
   min-height: clamp(330px, 90vw, 480px);
@@ -1354,7 +1368,7 @@ button {
 
 .special-result-avatar {
   position: relative;
-  z-index: 12;
+  z-index: 32;
   display: block;
   width: min(96vw, 400px);
   max-height: clamp(320px, 86vw, 456px);
@@ -1363,11 +1377,11 @@ button {
   object-fit: contain;
   object-position: center bottom;
   filter: drop-shadow(0 18px 22px rgba(54, 102, 112, 0.12));
-  transform: translateY(clamp(18px, 4.6vw, 32px));
+  transform: translateY(clamp(2px, 1.2vw, 8px));
 }
 
 .special-character-stage .result-deco {
-  z-index: 9;
+  z-index: 29;
   top: 52%;
   width: clamp(42px, 13vw, 68px);
 }
