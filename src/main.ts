@@ -388,9 +388,21 @@ function SpecialResultPage({
       h("h1", { className: "result-title" }, `${result.name} · ${result.englishName}`),
       h("figure", { className: "special-character-stage" },
         h("img", {
+          src: resultBracketLeftImage,
+          alt: "",
+          className: "result-deco result-deco-left",
+          "aria-hidden": "true"
+        }),
+        h("img", {
           src: specialImage,
           alt: `${result.name} ${result.englishName}人格形象`,
           className: "special-result-avatar"
+        }),
+        h("img", {
+          src: resultBracketRightImage,
+          alt: "",
+          className: "result-deco result-deco-right",
+          "aria-hidden": "true"
         })
       )
     ),

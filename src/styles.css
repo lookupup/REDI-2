@@ -1342,7 +1342,7 @@ button {
 
 .special-character-stage {
   position: relative;
-  z-index: 3;
+  z-index: 10;
   display: flex;
   width: min(100%, 520px);
   min-height: clamp(330px, 90vw, 480px);
@@ -1354,7 +1354,7 @@ button {
 
 .special-result-avatar {
   position: relative;
-  z-index: 4;
+  z-index: 12;
   display: block;
   width: min(96vw, 400px);
   max-height: clamp(320px, 86vw, 456px);
@@ -1363,7 +1363,21 @@ button {
   object-fit: contain;
   object-position: center bottom;
   filter: drop-shadow(0 18px 22px rgba(54, 102, 112, 0.12));
-  transform: translateY(clamp(28px, 6.4vw, 44px));
+  transform: translateY(clamp(18px, 4.6vw, 32px));
+}
+
+.special-character-stage .result-deco {
+  z-index: 9;
+  top: 52%;
+  width: clamp(42px, 13vw, 68px);
+}
+
+.special-character-stage .result-deco-left {
+  left: clamp(16px, 5.4vw, 44px);
+}
+
+.special-character-stage .result-deco-right {
+  right: clamp(16px, 5.4vw, 44px);
 }
 
 .special-content-flow {
@@ -1376,11 +1390,11 @@ button {
 }
 
 .special-result-profile {
-  max-width: 370px;
+  max-width: min(430px, calc(100vw - 32px));
   margin: clamp(48px, 10vw, 66px) auto 0;
-  text-align: left;
+  text-align: center;
   font-family: "ChillDIN", "Source Han Sans SC", "Noto Sans CJK SC", "PingFang SC", system-ui, sans-serif;
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 700;
   line-height: 1.16;
   letter-spacing: 0;
@@ -1703,8 +1717,20 @@ button {
   }
 
   .special-result-profile {
-    max-width: calc(100vw - 72px);
-    font-size: clamp(1.64rem, 7.6vw, 1.875rem);
+    max-width: calc(100vw - 32px);
+    font-size: clamp(1.5rem, 7vw, 1.75rem);
+  }
+
+  .special-character-stage .result-deco {
+    width: clamp(36px, 12vw, 54px);
+  }
+
+  .special-character-stage .result-deco-left {
+    left: clamp(8px, 3.4vw, 16px);
+  }
+
+  .special-character-stage .result-deco-right {
+    right: clamp(8px, 3.4vw, 16px);
   }
 
   .result-info-card {
