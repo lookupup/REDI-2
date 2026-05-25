@@ -360,7 +360,10 @@ function CoverPage({ onStart }: { onStart: () => void }) {
         h("span", { className: "cover-start-pulse" }, cover.cta)
       )
     ),
-    h("p", { className: "cover-footer-note" }, "*REDI：月经（RED）人格（Indicators）")
+    h("footer", { className: "cover-footer" },
+      h("p", { className: "cover-footer-note" }, "*REDI：月经（RED）人格（Indicators）"),
+      h("p", { className: "cover-footer-note" }, "月来月好 BetterPeriod💗致力于让所有月经体验安全、舒适、有尊严")
+    )
   );
 }
 
@@ -531,12 +534,13 @@ function SpecialResultPage({
           className: "result-footer-button result-footer-share"
         }, "复制链接分享")
       ),
-      h(ResultDisclaimer),
       h("button", {
         type: "button",
         onClick: onRestart,
         className: "result-restart"
-      }, "重新测试")
+      }, "重新测试"),
+      h(ResultTeamCredit),
+      h(ResultDisclaimer)
     ),
     h("div", { className: `result-toast ${toastMessage ? "result-toast-visible" : ""}`, role: "status", "aria-live": "polite" }, toastMessage)
   );
@@ -735,6 +739,7 @@ function FinalResultPage({
           onClick: onRestart,
           className: "result-restart"
         }, "重新测试"),
+        h(ResultTeamCredit),
         h(ResultDisclaimer)
       )
     ),
@@ -745,6 +750,10 @@ function FinalResultPage({
 
 function ResultDisclaimer() {
   return h("p", { className: "result-disclaimer mx-auto" }, resultDisclaimer);
+}
+
+function ResultTeamCredit() {
+  return h("p", { className: "result-team-credit mx-auto" }, "Designed with love by BetterPeriod Team 💗");
 }
 
 function TiltCard({ className, label, onClick }: { className: string; label: string; onClick: () => void }) {

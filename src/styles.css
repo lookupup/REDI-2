@@ -128,13 +128,22 @@ button {
   margin-top: clamp(14px, 2.1svh, 22px);
 }
 
-.cover-footer-note {
+.cover-footer {
   flex: 0 0 auto;
-  margin-top: clamp(14px, 2.4dvh, 26px);
+  margin-top: clamp(8px, 1.5dvh, 16px);
+  text-align: center;
+}
+
+.cover-footer-note {
+  margin: 0;
   font-size: clamp(0.68rem, 2.7vw, 0.8rem) !important;
   line-height: 1.35;
   color: rgba(0, 0, 0, 0.46);
   text-align: center;
+}
+
+.cover-footer-note + .cover-footer-note {
+  margin-top: 2px;
 }
 
 .cover-start-button {
@@ -1482,7 +1491,8 @@ button {
 
 .result-exporting .result-actions,
 .result-exporting .result-restart,
-.result-exporting .result-disclaimer {
+.result-exporting .result-disclaimer,
+.result-exporting .result-team-credit {
   display: none !important;
 }
 
@@ -1732,6 +1742,17 @@ button {
   margin: 20px auto 0;
   padding: 0;
   text-align: left;
+  font-family: "Source Han Sans SC", "Noto Sans CJK SC", "PingFang SC", system-ui, sans-serif;
+  font-size: 10px;
+  line-height: 1.55;
+  color: rgba(0, 0, 0, 0.36);
+}
+
+.result-team-credit {
+  max-width: 430px;
+  margin: 8px auto 0;
+  padding: 0;
+  text-align: center;
   font-family: "Source Han Sans SC", "Noto Sans CJK SC", "PingFang SC", system-ui, sans-serif;
   font-size: 10px;
   line-height: 1.55;
