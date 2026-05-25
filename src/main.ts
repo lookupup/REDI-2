@@ -239,7 +239,7 @@ function CoverPage({ onStart }: { onStart: () => void }) {
       ),
       h("section", { className: "cover-copy relative z-10 text-black/82" },
         h("p", null, "你有没有想过，月经其实是一位老朋友?"),
-        h("p", null, "这是一个关于你的“月经人格\"的小测试。", h("br"), "里面有一点自我觉察，一点冷知识，", h("br"), "还有一点\"原来不只我这样\"。", h("br"), "你的身体，一直有话说。")
+        h("p", null, "完成REDI 测试解锁你和月经的关系，", h("br"), "看看你的经期体验对应哪种人格、锦囊和特别勋章。")
       ),
       h("button", {
         type: "button",
