@@ -78,7 +78,7 @@ const specialResults: Record<SpecialResultId, { name: string; englishName: strin
   ALLY: {
     name: "月经同盟",
     englishName: "ALLY",
-    body: "你虽不登台，但你能成为最坚实的后援，\n你用理解与行动，\n为身边人的每一种状态撑腰。"
+    body: "你虽不登台，\n但你能成为最坚实的后援，\n你用理解与行动，\n为身边人的每一种状态撑腰。"
   },
   FREE: {
     name: "旷野艺术家",
