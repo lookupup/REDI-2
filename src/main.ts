@@ -9,7 +9,7 @@ import { dimensions } from "./data/dimensions";
 import { mainResultById } from "./data/mainResults";
 import { formalQuestions, hiddenQuestions, q0, type Question, type QuestionOption } from "./data/questions";
 import { calculateResult, type Answers, type CalculatedResult } from "./lib/scoring";
-import { track } from "./analytics";
+import { getSharedAnalyticsPayload, trackEvent } from "./analytics";
 
 type Page = "cover" | "quiz" | "result";
 type PopupType = "persona" | "action" | "hidden" | "save";
@@ -170,10 +170,11 @@ const hiddenSymbols: Record<string, string> = {
 
 function App() {
   const [state, setState] = React.useState<AppState>(initialState);
+  const testStartedAtRef = React.useRef<number | null>(null);
 
   React.useEffect(() => {
-    track("page_view", { page: state.page });
-  }, [state.page]);
+    trackEvent("page_view", getSharedAnalyticsPayload());
+  }, []);
 
   const calculatedResult = React.useMemo(
     () => calculateResult(state.answers),
@@ -186,16 +187,17 @@ function App() {
       const specialResultId = question.id === q0.id ? q0SpecialResults[option.id] : null;
       const isLastQuestion = current.questionIndex >= allQuestions.length - 1;
 
-      track("question_answered", {
-        question_id: question.id,
-        option_id: option.id,
-        question_index: current.questionIndex + 1
-      });
-
       if (specialResultId) {
-        track("test_completed", {
-          special_result: specialResultId,
-          q0_option_id: option.id
+        const specialResult = specialResults[specialResultId];
+        trackEvent("result_generated", {
+          personality_result: specialResultId,
+          personality_result_cn: specialResult.name,
+          personality_result_en: specialResult.englishName,
+          tips_result: "",
+          badge_result: specialResultId,
+          is_hidden_result: true,
+          test_duration_seconds: testStartedAtRef.current ? Math.round((Date.now() - testStartedAtRef.current) / 1000) : 0,
+          ...getSharedAnalyticsPayload()
         });
         return {
           ...current,
@@ -208,11 +210,16 @@ function App() {
 
       if (isLastQuestion) {
         const result = calculateResult(nextAnswers);
-        track("test_completed", {
-          main_persona: result.mainPersona.id,
-          persona_image_key: result.personaImageKey,
-          action_kit: result.actionKit.id,
-          badges: result.badges
+        const resultParts = getResultParts(result);
+        trackEvent("result_generated", {
+          personality_result: result.personaImageKey,
+          personality_result_cn: resultParts.persona.name,
+          personality_result_en: resultParts.persona.englishName,
+          tips_result: result.actionKit.id,
+          badge_result: result.badges.join(","),
+          is_hidden_result: false,
+          test_duration_seconds: testStartedAtRef.current ? Math.round((Date.now() - testStartedAtRef.current) / 1000) : 0,
+          ...getSharedAnalyticsPayload()
         });
         return { ...current, answers: nextAnswers, page: "result", activePopup: null, specialResultId: null };
       }
@@ -236,7 +243,8 @@ function App() {
   return h(PhoneShell, null,
     state.page === "cover" && h(CoverPage, {
       onStart: () => {
-        track("test_start");
+        testStartedAtRef.current = Date.now();
+        trackEvent("click_start", getSharedAnalyticsPayload());
         setState((current) => ({ ...current, page: "quiz" }));
       }
     }),
@@ -257,7 +265,6 @@ function App() {
       calculatedResult,
       activePopup: state.activePopup,
       onOpenPopup: (activePopup: PopupType) => {
-        if (activePopup === "save") track("image_generated", { source: "result_page" });
         setState((current) => ({ ...current, activePopup }));
       },
       onClosePopup: () => setState((current) => ({ ...current, activePopup: null })),
@@ -396,7 +403,8 @@ function useShareFeedback() {
   }, []);
 
   const shareResult = async () => {
-    track("share_clicked", { source: "result_page" });
+    trackEvent("click_share", { source: "result_page", ...getSharedAnalyticsPayload() });
+    trackEvent("copy_link", { source: "result_page", ...getSharedAnalyticsPayload() });
 
     let message = "✅已复制";
     try {
@@ -508,6 +516,10 @@ function FinalResultPage({
   const saveFullResult = async () => {
     if (!captureRef.current || isSaving) return;
 
+    trackEvent("click_save_image", {
+      personality_result: calculatedResult.personaImageKey,
+      ...getSharedAnalyticsPayload()
+    });
     setIsSaving(true);
     captureRef.current.classList.add("result-exporting");
     try {
@@ -583,7 +595,6 @@ function FinalResultPage({
       link.href = url;
       link.download = `REDI-${calculatedResult.personaImageKey}.png`;
       link.click();
-      track("image_saved", { persona: calculatedResult.mainPersona.id, source: "full_result_page" });
     } finally {
       captureRef.current?.classList.remove("result-exporting");
       setIsSaving(false);
@@ -758,6 +769,11 @@ function SaveImagePopup({
   const saveImage = async () => {
     if (!captureRef.current) return;
 
+    trackEvent("click_save_image", {
+      personality_result: calculatedResult.personaImageKey,
+      source: "save_popup",
+      ...getSharedAnalyticsPayload()
+    });
     const canvas = await html2canvas(captureRef.current, {
       backgroundColor: "#ffffff",
       scale: Math.min(window.devicePixelRatio || 2, 3),
@@ -768,7 +784,6 @@ function SaveImagePopup({
     link.href = url;
     link.download = `REDI-${calculatedResult.personaImageKey}.png`;
     link.click();
-    track("image_saved", { persona: calculatedResult.mainPersona.id });
   };
 
   return h("div", { className: "result-modal save-modal", role: "dialog", "aria-modal": "true", "aria-labelledby": "save-popup-title" },
