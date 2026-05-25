@@ -47,6 +47,10 @@ type SvgExportTitle = {
 const h = React.createElement;
 const chipIcons = ["✷", "✦", "✧", "✹"];
 const allQuestions: Question[] = [q0, ...formalQuestions, ...hiddenQuestions];
+const q0QuestionIndex = allQuestions.findIndex((question) => question.id === "Q0");
+const o1QuestionIndex = allQuestions.findIndex((question) => question.id === "O1");
+const o2QuestionIndex = allQuestions.findIndex((question) => question.id === "O2");
+const specialQuestionIds = ["Q0", "O1", "O2"];
 const homePadImage = new URL("../assets/reference/home-pad-labeled.webp", import.meta.url).toString();
 const q0DropImage = new URL("../assets/reference/q0-drop.webp", import.meta.url).toString();
 const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
@@ -78,7 +82,7 @@ const specialResults: Record<SpecialResultId, { name: string; englishName: strin
   ALLY: {
     name: "月经同盟",
     englishName: "ALLY",
-    body: "你虽不登台，\n但你能成为最坚实的后援，\n你用理解与行动，\n为身边人的每一种状态撑腰。"
+    body: "你虽未亲身感受，\n但月经的故事一直都在你身边。\n期待你进一步探索有关月经的一切，\n直至你成为身边人最坚实的后援。"
   },
   FREE: {
     name: "旷野艺术家",
@@ -184,10 +188,32 @@ function App() {
   const answerQuestion = (question: Question, option: QuestionOption) => {
     setState((current) => {
       const nextAnswers = { ...current.answers, [question.id]: option.id };
-      const specialResultId = question.id === q0.id ? q0SpecialResults[option.id] : null;
+      const selectedSpecialResultId = question.id === q0.id ? q0SpecialResults[option.id] : null;
       const isLastQuestion = current.questionIndex >= allQuestions.length - 1;
 
-      if (specialResultId) {
+      if (selectedSpecialResultId) {
+        return {
+          ...current,
+          answers: nextAnswers,
+          page: "quiz",
+          questionIndex: o1QuestionIndex,
+          activePopup: null,
+          specialResultId: selectedSpecialResultId
+        };
+      }
+
+      if (current.specialResultId && question.id === "O1") {
+        return {
+          ...current,
+          answers: nextAnswers,
+          page: "quiz",
+          questionIndex: o2QuestionIndex,
+          activePopup: null
+        };
+      }
+
+      if (current.specialResultId && question.id === "O2") {
+        const specialResultId = current.specialResultId;
         const specialResult = specialResults[specialResultId];
         trackEvent("result_generated", {
           personality_result: specialResultId,
@@ -234,11 +260,34 @@ function App() {
   };
 
   const goToPreviousQuestion = () => {
-    setState((current) => ({
-      ...current,
-      questionIndex: Math.max(current.questionIndex - 1, 0)
-    }));
+    setState((current) => {
+      if (current.specialResultId) {
+        const currentQuestion = allQuestions[current.questionIndex];
+        if (currentQuestion?.id === "O2") {
+          return { ...current, questionIndex: o1QuestionIndex };
+        }
+        if (currentQuestion?.id === "O1") {
+          return { ...current, questionIndex: q0QuestionIndex, specialResultId: null };
+        }
+      }
+
+      return {
+        ...current,
+        questionIndex: Math.max(current.questionIndex - 1, 0)
+      };
+    });
   };
+
+  const currentQuestion = allQuestions[state.questionIndex];
+  const specialQuestionDisplayIndex = state.specialResultId
+    ? specialQuestionIds.indexOf(currentQuestion.id)
+    : -1;
+  const questionDisplayIndex = specialQuestionDisplayIndex >= 0
+    ? specialQuestionDisplayIndex
+    : state.questionIndex;
+  const questionDisplayTotal = specialQuestionDisplayIndex >= 0
+    ? specialQuestionIds.length
+    : allQuestions.length;
 
   return h(PhoneShell, null,
     state.page === "cover" && h(CoverPage, {
@@ -249,10 +298,10 @@ function App() {
       }
     }),
     state.page === "quiz" && h(QuestionPage, {
-      question: allQuestions[state.questionIndex],
-      index: state.questionIndex,
-      total: allQuestions.length,
-      selectedAnswer: state.answers[allQuestions[state.questionIndex].id],
+      question: currentQuestion,
+      index: questionDisplayIndex,
+      total: questionDisplayTotal,
+      selectedAnswer: state.answers[currentQuestion.id],
       onAnswer: answerQuestion,
       onBack: goToPreviousQuestion
     }),
