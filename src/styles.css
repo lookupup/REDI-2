@@ -1445,6 +1445,13 @@ button {
   padding-bottom: 24px;
 }
 
+.result-exporting .result-avatar {
+  width: auto;
+  max-width: min(102vw, 422px);
+  height: clamp(332px, 92vw, 460px);
+  max-height: none;
+}
+
 .result-exporting .result-actions,
 .result-exporting .result-restart,
 .result-exporting .result-disclaimer {
