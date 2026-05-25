@@ -1441,6 +1441,16 @@ button {
   text-align: center;
 }
 
+.result-exporting .result-content-flow {
+  padding-bottom: 24px;
+}
+
+.result-exporting .result-actions,
+.result-exporting .result-restart,
+.result-exporting .result-disclaimer {
+  display: none !important;
+}
+
 .result-page-redesign .result-declaration {
   max-width: 440px !important;
   margin: 0 auto !important;

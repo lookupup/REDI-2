@@ -455,6 +455,7 @@ function FinalResultPage({
     if (!captureRef.current || isSaving) return;
 
     setIsSaving(true);
+    captureRef.current.classList.add("result-exporting");
     try {
       const canvas = await html2canvas(captureRef.current, {
         backgroundColor: "#ffffff",
@@ -470,6 +471,7 @@ function FinalResultPage({
       link.click();
       track("image_saved", { persona: calculatedResult.mainPersona.id, source: "full_result_page" });
     } finally {
+      captureRef.current?.classList.remove("result-exporting");
       setIsSaving(false);
     }
   };
