@@ -1452,6 +1452,34 @@ button {
   max-height: none;
 }
 
+.result-exporting .result-declaration p,
+.result-exporting .result-profile {
+  font-family: "Source Han Sans SC", "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+
+.result-exporting .result-declaration p {
+  line-height: 1.32;
+}
+
+.result-exporting .result-chip {
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  min-height: 0;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 1;
+}
+
+.result-exporting .result-chip-icon {
+  display: inline-block;
+  line-height: 1;
+}
+
 .result-exporting .result-actions,
 .result-exporting .result-restart,
 .result-exporting .result-disclaimer {
@@ -1587,7 +1615,7 @@ button {
   color: rgba(0, 0, 0, 0.58);
 }
 
-.result-card-title::before {
+.result-card-title-icon {
   display: inline-flex;
   width: 15px;
   height: 15px;
@@ -1601,13 +1629,11 @@ button {
   color: rgba(0, 0, 0, 0.72);
 }
 
-.result-card-title-action::before {
-  content: "+";
+.result-card-title-action .result-card-title-icon {
   background: #fceaf8;
 }
 
-.result-card-title-medal::before {
-  content: "✦";
+.result-card-title-medal .result-card-title-icon {
   background: #fceaf8;
 }
 

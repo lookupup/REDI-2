@@ -457,6 +457,9 @@ function FinalResultPage({
     setIsSaving(true);
     captureRef.current.classList.add("result-exporting");
     try {
+      await document.fonts?.ready?.catch(() => undefined);
+      await new Promise((resolve) => window.requestAnimationFrame(resolve));
+      await new Promise((resolve) => window.requestAnimationFrame(resolve));
       const canvas = await html2canvas(captureRef.current, {
         backgroundColor: "#ffffff",
         scale: Math.min(window.devicePixelRatio || 2, 3),
@@ -519,7 +522,10 @@ function FinalResultPage({
         ),
         h("section", { className: "result-card-section result-action-section", "aria-label": "经期行动小锦囊" },
           h("article", { className: "result-info-card result-action-card" },
-            h("h2", { className: "result-card-title result-card-title-action" }, "经期活动小锦囊"),
+            h("h2", { className: "result-card-title result-card-title-action" },
+              h("span", { className: "result-card-title-icon", "aria-hidden": "true" }, "+"),
+              "经期活动小锦囊"
+            ),
             h("h3", null, parts.actionKit.name),
             parts.actionKit.body.map((paragraph) => h("p", { key: paragraph }, paragraph)),
             h("p", { className: "result-card-lead" }, "可以试着："),
@@ -531,7 +537,10 @@ function FinalResultPage({
         ),
         badges.length > 0 && h("section", { className: "result-card-section result-medal-section", "aria-label": "特别勋章解读" },
           badges.map((badge) => h("article", { key: badge.id, className: "result-info-card result-medal-card" },
-            h("h2", { className: "result-card-title result-card-title-medal" }, "特别勋章解读"),
+            h("h2", { className: "result-card-title result-card-title-medal" },
+              h("span", { className: "result-card-title-icon", "aria-hidden": "true" }, "✦"),
+              "特别勋章解读"
+            ),
             h("h3", null, `${badge.name} · ${badge.englishName}`),
             "declaration" in badge && h("p", null, badge.declaration),
             badge.body.map((paragraph) => h("p", { key: paragraph }, paragraph))
