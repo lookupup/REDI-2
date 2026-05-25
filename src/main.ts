@@ -29,6 +29,21 @@ type ResultParts = {
   badges: Array<(typeof badgeById)[keyof typeof badgeById]>;
 };
 
+type SvgExportChip = {
+  width: number;
+  height: number;
+  icon: string;
+  text: string;
+  background: string;
+};
+
+type SvgExportTitle = {
+  width: number;
+  height: number;
+  icon: string;
+  text: string;
+};
+
 const h = React.createElement;
 const chipIcons = ["✷", "✦", "✧", "✹"];
 const allQuestions: Question[] = [q0, ...formalQuestions, ...hiddenQuestions];
@@ -106,6 +121,45 @@ const dimensionSymbols: Record<string, string> = {
   O: "quote",
   D: "notebook"
 };
+
+function escapeSvgText(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function svgDataUrl(svg: string) {
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+}
+
+function chipSvgDataUrl(chip: SvgExportChip) {
+  const background = chip.background.includes("gradient")
+    ? '<linearGradient id="chipBg" x1="0" x2="1" y1="0" y2="0"><stop stop-color="#fceaf8"/><stop offset="1" stop-color="#c8ecf3"/></linearGradient>'
+    : "";
+  const fill = chip.background.includes("gradient") ? 'url(#chipBg)' : chip.background;
+  const iconX = 12;
+  const textX = chip.icon ? 29 : 12;
+  return svgDataUrl(`
+    <svg xmlns="http://www.w3.org/2000/svg" width="${chip.width}" height="${chip.height}" viewBox="0 0 ${chip.width} ${chip.height}">
+      <defs>${background}</defs>
+      <rect width="${chip.width}" height="${chip.height}" rx="${chip.height / 2}" fill="${fill}"/>
+      ${chip.icon ? `<text x="${iconX}" y="${chip.height / 2}" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#111">${escapeSvgText(chip.icon)}</text>` : ""}
+      <text x="${textX}" y="${chip.height / 2}" dominant-baseline="central" font-family="PingFang SC, Arial, sans-serif" font-size="12" font-weight="700" fill="#111">${escapeSvgText(chip.text)}</text>
+    </svg>
+  `);
+}
+
+function titleSvgDataUrl(title: SvgExportTitle) {
+  return svgDataUrl(`
+    <svg xmlns="http://www.w3.org/2000/svg" width="${title.width}" height="${title.height}" viewBox="0 0 ${title.width} ${title.height}">
+      <rect x="0" y="${(title.height - 15) / 2}" width="15" height="15" rx="5" fill="#fceaf8"/>
+      <text x="7.5" y="${title.height / 2}" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="800" fill="rgba(0,0,0,0.72)">${escapeSvgText(title.icon)}</text>
+      <text x="22" y="${title.height / 2}" dominant-baseline="central" font-family="PingFang SC, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(0,0,0,0.58)">${escapeSvgText(title.text)}</text>
+    </svg>
+  `);
+}
 
 const hiddenSymbols: Record<string, string> = {
   H1: "stone",
@@ -460,12 +514,69 @@ function FinalResultPage({
       await document.fonts?.ready?.catch(() => undefined);
       await new Promise((resolve) => window.requestAnimationFrame(resolve));
       await new Promise((resolve) => window.requestAnimationFrame(resolve));
+      const exportChips: SvgExportChip[] = Array.from(captureRef.current.querySelectorAll<HTMLElement>(".result-chip")).map((chip) => {
+        const rect = chip.getBoundingClientRect();
+        const icon = chip.querySelector<HTMLElement>(".result-chip-icon")?.innerText.trim() || "";
+        const text = Array.from(chip.childNodes)
+          .filter((node) => node.nodeType === Node.TEXT_NODE)
+          .map((node) => node.textContent || "")
+          .join("")
+          .trim();
+        return {
+          width: Math.ceil(rect.width),
+          height: Math.ceil(rect.height),
+          icon,
+          text,
+          background: window.getComputedStyle(chip).backgroundImage !== "none"
+            ? window.getComputedStyle(chip).backgroundImage
+            : window.getComputedStyle(chip).backgroundColor
+        };
+      });
+      const exportTitles: SvgExportTitle[] = Array.from(captureRef.current.querySelectorAll<HTMLElement>(".result-card-title")).map((title) => {
+        const rect = title.getBoundingClientRect();
+        const icon = title.querySelector<HTMLElement>(".result-card-title-icon")?.innerText.trim() || "";
+        const text = Array.from(title.childNodes)
+          .filter((node) => node.nodeType === Node.TEXT_NODE)
+          .map((node) => node.textContent || "")
+          .join("")
+          .trim();
+        return {
+          width: Math.ceil(rect.width),
+          height: Math.ceil(rect.height),
+          icon,
+          text
+        };
+      });
       const canvas = await html2canvas(captureRef.current, {
         backgroundColor: "#ffffff",
         scale: Math.min(window.devicePixelRatio || 2, 3),
         useCORS: true,
         windowWidth: captureRef.current.scrollWidth,
-        windowHeight: captureRef.current.scrollHeight
+        windowHeight: captureRef.current.scrollHeight,
+        onclone: (clonedDocument) => {
+          clonedDocument.querySelectorAll<HTMLElement>(".result-chip").forEach((chip, index) => {
+            const exportChip = exportChips[index];
+            if (!exportChip) return;
+            const image = clonedDocument.createElement("img");
+            image.src = chipSvgDataUrl(exportChip);
+            image.alt = chip.textContent?.trim() || "";
+            image.style.display = "block";
+            image.style.width = `${exportChip.width}px`;
+            image.style.height = `${exportChip.height}px`;
+            chip.replaceWith(image);
+          });
+          clonedDocument.querySelectorAll<HTMLElement>(".result-card-title").forEach((title, index) => {
+            const exportTitle = exportTitles[index];
+            if (!exportTitle) return;
+            const image = clonedDocument.createElement("img");
+            image.src = titleSvgDataUrl(exportTitle);
+            image.alt = title.textContent?.trim() || "";
+            image.style.display = "block";
+            image.style.width = `${exportTitle.width}px`;
+            image.style.height = `${exportTitle.height}px`;
+            title.replaceWith(image);
+          });
+        }
       });
       const url = canvas.toDataURL("image/png");
       const link = document.createElement("a");
