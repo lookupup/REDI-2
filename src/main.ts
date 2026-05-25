@@ -32,8 +32,8 @@ type ResultParts = {
 const h = React.createElement;
 const chipIcons = ["✷", "✦", "✧", "✹"];
 const allQuestions: Question[] = [q0, ...formalQuestions, ...hiddenQuestions];
-const homePadImage = new URL("../assets/reference/home-pad-labeled.png", import.meta.url).toString();
-const q0DropImage = new URL("../assets/reference/q0-drop.png", import.meta.url).toString();
+const homePadImage = new URL("../assets/reference/home-pad-labeled.webp", import.meta.url).toString();
+const q0DropImage = new URL("../assets/reference/q0-drop.webp", import.meta.url).toString();
 const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 const resultFlowerImage = publicAsset("images/flower.png");
 const resultBracketLeftImage = publicAsset("images/result-bracket-left.png");
@@ -73,29 +73,29 @@ const specialResults: Record<SpecialResultId, { name: string; englishName: strin
 };
 
 const specialResultImages: Record<SpecialResultId, string> = {
-  BLANK: publicAsset("images/personas/BLANK.png"),
-  ALLY: publicAsset("images/personas/ALLY.png"),
-  FREE: publicAsset("images/personas/FREE.png")
+  BLANK: publicAsset("images/personas/blank.webp"),
+  ALLY: publicAsset("images/personas/ally.webp"),
+  FREE: publicAsset("images/personas/free.webp")
 };
 
 const personaImages: Record<string, string> = {
-  STAR: publicAsset("images/personas/STAR.png"),
-  STAR_HARD: publicAsset("images/personas/STAR_HARD.png"),
-  WILD: publicAsset("images/personas/WILD.png"),
-  WILD_HARD: publicAsset("images/personas/WILD_HARD.png"),
-  COACH: publicAsset("images/personas/COACH.png"),
-  COACH_HARD: publicAsset("images/personas/COACH_HARD.png"),
-  NEWS: publicAsset("images/personas/NEWS.png"),
-  NEWS_HARD: publicAsset("images/personas/NEWS_HARD.png"),
-  INVISIBLE: publicAsset("images/personas/INVISIBLE.png"),
-  INVISIBLE_HARD: publicAsset("images/personas/INVISIBLE_HARD.png"),
+  STAR: publicAsset("images/personas/star.webp"),
+  STAR_HARD: publicAsset("images/personas/star-hard.webp"),
+  WILD: publicAsset("images/personas/wild.webp"),
+  WILD_HARD: publicAsset("images/personas/wild-hard.webp"),
+  COACH: publicAsset("images/personas/coach.webp"),
+  COACH_HARD: publicAsset("images/personas/coach-hard.webp"),
+  NEWS: publicAsset("images/personas/news.webp"),
+  NEWS_HARD: publicAsset("images/personas/news-hard.webp"),
+  INVISIBLE: publicAsset("images/personas/invisible.webp"),
+  INVISIBLE_HARD: publicAsset("images/personas/invisible-hard.webp"),
   // TODO: Confirm whether the project persona id SURPRISE should permanently use the RANGER image assets.
-  SURPRISE: publicAsset("images/personas/RANGER.png"),
-  SURPRISE_HARD: publicAsset("images/personas/RANGER_HARD.png"),
-  ASSASSIN: publicAsset("images/personas/ASSASSIN.png"),
-  ASSASSIN_HARD: publicAsset("images/personas/ASSASSIN_HARD.png"),
-  OWL: publicAsset("images/personas/OWL.png"),
-  OWL_HARD: publicAsset("images/personas/OWL_HARD.png")
+  SURPRISE: publicAsset("images/personas/ranger.webp"),
+  SURPRISE_HARD: publicAsset("images/personas/ranger-hard.webp"),
+  ASSASSIN: publicAsset("images/personas/assassin.webp"),
+  ASSASSIN_HARD: publicAsset("images/personas/assassin-hard.webp"),
+  OWL: publicAsset("images/personas/owl.webp"),
+  OWL_HARD: publicAsset("images/personas/owl-hard.webp")
 };
 
 const dimensionSymbols: Record<string, string> = {
