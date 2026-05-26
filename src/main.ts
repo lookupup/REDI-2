@@ -766,19 +766,20 @@ function SaveImagePopup({
     try {
       await document.fonts?.ready?.catch(() => undefined);
       await Promise.all(Array.from(captureRef.current.querySelectorAll("img")).map((image) => {
-        if (image.complete) return undefined;
+        if (image.complete && image.naturalWidth > 0) return image.decode?.().catch(() => undefined);
         return new Promise((resolve) => {
           image.onload = resolve;
           image.onerror = resolve;
-        });
+        }).then(() => image.decode?.().catch(() => undefined));
       }));
+      await new Promise((resolve) => window.requestAnimationFrame(resolve));
       await new Promise((resolve) => window.requestAnimationFrame(resolve));
       const canvas = await html2canvas(captureRef.current, {
         backgroundColor: "#ffffff",
-        scale: Math.min(window.devicePixelRatio || 2, 3),
+        scale: 3,
         useCORS: true,
-        windowWidth: captureRef.current.scrollWidth,
-        windowHeight: captureRef.current.scrollHeight
+        windowWidth: 360,
+        windowHeight: 480
       });
       const url = canvas.toDataURL("image/png");
       const link = document.createElement("a");
@@ -795,7 +796,7 @@ function SaveImagePopup({
     h("section", { className: "save-popup-shell" },
       h("button", { type: "button", className: "result-popup-close save-popup-close", "aria-label": "关闭弹窗", onClick: onClose }, "×"),
       h("div", { className: "save-popup-scroll" },
-        h("article", { ref: captureRef, className: "save-share-card" },
+        h("article", { ref: captureRef, className: "save-share-card share-card-export" },
           h("section", { className: "save-share-hero" },
             h("img", {
               src: shareBackgroundImage,
@@ -804,11 +805,13 @@ function SaveImagePopup({
               "aria-hidden": "true"
             }),
             h("h1", { id: "save-popup-title", className: "save-share-title" }, `${parts.persona.name} · ${parts.persona.englishName}`),
-            h("img", {
-              src: personaImage,
-              alt: `${parts.persona.name}人格形象`,
-              className: "save-share-avatar"
-            })
+            h("figure", { className: "save-share-avatar-wrap" },
+              h("img", {
+                src: personaImage,
+                alt: `${parts.persona.name}人格形象`,
+                className: "save-share-avatar"
+              })
+            )
           ),
           h("section", { className: "save-share-content" },
             h("blockquote", { className: "save-share-quote" }, `“${parts.persona.declaration}”`),
