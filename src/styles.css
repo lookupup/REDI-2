@@ -897,8 +897,8 @@ button {
 .save-share-hero {
   position: relative;
   width: 100%;
-  height: 248px;
-  flex: 0 0 248px;
+  height: 226px;
+  flex: 0 0 226px;
   background: #ffffff;
   overflow: visible;
 }
@@ -918,7 +918,7 @@ button {
   position: relative;
   z-index: 5;
   margin: 0;
-  padding: 21px 42px 0;
+  padding: 18px 42px 0;
   text-align: center;
   font-family: "ChillDIN", "Source Han Sans SC", "Noto Sans CJK SC", "PingFang SC", system-ui, sans-serif;
   font-size: 22px;
@@ -930,10 +930,10 @@ button {
   position: absolute;
   z-index: 4;
   left: 50%;
-  top: 52px;
+  top: 68px;
   display: flex;
-  width: 270px;
-  height: 238px;
+  width: 304px;
+  height: 264px;
   align-items: center;
   justify-content: center;
   margin: 0;
@@ -960,17 +960,17 @@ button {
   flex: 1 1 auto;
   flex-direction: column;
   align-items: center;
-  padding: 50px 22px 20px;
+  padding: 64px 22px 18px;
 }
 
 .save-share-quote {
   margin: 0;
-  max-width: 318px;
+  max-width: 322px;
   text-align: center;
   font-family: "ChillDIN", "Source Han Sans SC", "Noto Sans CJK SC", "PingFang SC", system-ui, sans-serif;
-  font-size: 24px;
+  font-size: 21px;
   font-weight: 900;
-  line-height: 1.28;
+  line-height: 1.24;
   color: #050505;
 }
 
@@ -980,7 +980,7 @@ button {
   flex-wrap: wrap;
   justify-content: center;
   gap: 7px;
-  margin-top: 17px;
+  margin-top: 14px;
 }
 
 .save-share-chip {
@@ -990,10 +990,10 @@ button {
 
 .save-share-logo {
   display: block;
-  width: 150px;
+  width: 146px;
   height: auto;
   margin-top: auto;
-  padding-top: 17px;
+  padding-top: 14px;
   object-fit: contain;
 }
 
