@@ -936,10 +936,10 @@ button {
   position: absolute;
   z-index: 4;
   left: 50%;
-  top: 56px;
+  top: 50px;
   display: flex;
-  width: 218px;
-  height: 190px;
+  width: 250px;
+  height: 220px;
   align-items: center;
   justify-content: center;
   margin: 0;
@@ -966,17 +966,17 @@ button {
   flex: 1 1 auto;
   flex-direction: column;
   align-items: center;
-  padding: 34px 22px 22px;
+  padding: 62px 22px 20px;
 }
 
 .save-share-quote {
   margin: 0;
-  max-width: 312px;
+  max-width: 322px;
   text-align: center;
   font-family: "ChillDIN", "Source Han Sans SC", "Noto Sans CJK SC", "PingFang SC", system-ui, sans-serif;
-  font-size: 17px;
+  font-size: 20px;
   font-weight: 900;
-  line-height: 1.28;
+  line-height: 1.3;
   color: #050505;
 }
 
@@ -985,31 +985,32 @@ button {
   width: 100%;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 7px;
-  margin-top: 13px;
+  gap: 18px;
+  margin-top: 22px;
 }
 
 .save-share-chip {
   display: inline-flex;
-  min-height: 28px;
+  min-height: 22px;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  padding: 0 10px;
-  font-size: 12px;
+  gap: 4px;
+  padding: 0;
+  border-radius: 0;
+  background: transparent !important;
+  font-size: 13px;
+  font-weight: 800;
   line-height: 1;
   text-align: center;
   vertical-align: middle;
 }
 
-.save-share-chip .result-chip-icon {
-  display: grid;
-  width: 14px;
-  height: 14px;
-  place-items: center;
-  font-size: 12px;
-  line-height: 1;
-  transform: translateY(-1px);
+.save-share-chip-flower {
+  display: block;
+  width: 19px;
+  height: 19px;
+  flex: 0 0 auto;
+  object-fit: contain;
 }
 
 .save-share-chip-label {
@@ -1017,13 +1018,33 @@ button {
   line-height: 1;
   transform: translateY(-1px);
   white-space: nowrap;
+  color: #000000;
+  text-shadow: 0 4px 4px var(--share-chip-shadow, #f4c9e8);
+}
+
+.save-share-chip:nth-child(1),
+.save-share-chip:nth-child(3) {
+  --share-chip-shadow: #f4c9e8;
+}
+
+.save-share-chip:nth-child(2) {
+  --share-chip-shadow: #c8ecf3;
+}
+
+.save-share-chip:nth-child(1) .save-share-chip-flower,
+.save-share-chip:nth-child(3) .save-share-chip-flower {
+  filter: hue-rotate(106deg) saturate(1.4) brightness(1.1);
+}
+
+.save-share-chip:nth-child(2) .save-share-chip-flower {
+  filter: none;
 }
 
 .save-share-logo {
   display: block;
-  width: 136px;
+  width: 150px;
   height: auto;
-  margin-top: 14px;
+  margin-top: 32px;
   padding-top: 0;
   object-fit: contain;
 }
