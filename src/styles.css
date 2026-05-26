@@ -1020,16 +1020,18 @@ button {
   transform: translateY(-1px);
   white-space: nowrap;
   color: #000000;
-  text-shadow: 0 4px 4px var(--share-chip-color, #ff79ce);
+  text-shadow: 0 4px 4px var(--share-chip-shadow, rgba(255, 121, 206, 0.3));
 }
 
 .save-share-chip:nth-child(1),
 .save-share-chip:nth-child(3) {
   --share-chip-color: #ff79ce;
+  --share-chip-shadow: rgba(255, 121, 206, 0.3);
 }
 
 .save-share-chip:nth-child(2) {
   --share-chip-color: #7ddfe9;
+  --share-chip-shadow: rgba(125, 223, 233, 0.3);
 }
 
 .save-share-logo {
