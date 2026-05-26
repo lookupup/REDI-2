@@ -936,10 +936,10 @@ button {
   position: absolute;
   z-index: 4;
   left: 50%;
-  top: 50px;
+  top: 58px;
   display: flex;
-  width: 250px;
-  height: 220px;
+  width: 278px;
+  height: 242px;
   align-items: center;
   justify-content: center;
   margin: 0;
@@ -966,7 +966,7 @@ button {
   flex: 1 1 auto;
   flex-direction: column;
   align-items: center;
-  padding: 62px 22px 20px;
+  padding: 76px 22px 20px;
 }
 
 .save-share-quote {
@@ -1007,10 +1007,11 @@ button {
 
 .save-share-chip-flower {
   display: block;
-  width: 19px;
-  height: 19px;
   flex: 0 0 auto;
-  object-fit: contain;
+  color: var(--share-chip-color, #ff79ce);
+  font-size: 22px;
+  line-height: 1;
+  transform: translateY(-1px);
 }
 
 .save-share-chip-label {
@@ -1019,25 +1020,16 @@ button {
   transform: translateY(-1px);
   white-space: nowrap;
   color: #000000;
-  text-shadow: 0 4px 4px var(--share-chip-shadow, #f4c9e8);
+  text-shadow: 0 4px 4px var(--share-chip-color, #ff79ce);
 }
 
 .save-share-chip:nth-child(1),
 .save-share-chip:nth-child(3) {
-  --share-chip-shadow: #f4c9e8;
+  --share-chip-color: #ff79ce;
 }
 
 .save-share-chip:nth-child(2) {
-  --share-chip-shadow: #c8ecf3;
-}
-
-.save-share-chip:nth-child(1) .save-share-chip-flower,
-.save-share-chip:nth-child(3) .save-share-chip-flower {
-  filter: hue-rotate(106deg) saturate(1.4) brightness(1.1);
-}
-
-.save-share-chip:nth-child(2) .save-share-chip-flower {
-  filter: none;
+  --share-chip-color: #7ddfe9;
 }
 
 .save-share-logo {

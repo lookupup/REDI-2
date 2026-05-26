@@ -816,7 +816,7 @@ function SaveImagePopup({
             h("blockquote", { className: "save-share-quote" }, `“${parts.persona.declaration}”`),
             h("div", { className: "save-share-chip-row", "aria-label": "人格标签" },
               parts.persona.tags.map((tag, index) => h("span", { key: tag, className: "result-chip save-share-chip" },
-                h("img", { src: resultFlowerImage, alt: "", className: "save-share-chip-flower", "aria-hidden": "true" }),
+                h("span", { className: "save-share-chip-flower", "aria-hidden": "true" }, "✤"),
                 h("span", { className: "save-share-chip-label" }, tag)
               ))
             ),
