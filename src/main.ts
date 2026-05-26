@@ -362,7 +362,7 @@ function CoverPage({ onStart }: { onStart: () => void }) {
       ),
       h("section", { className: "cover-copy relative z-10 text-black/82" },
         h("p", null, "你有没有想过，月经其实是一位老朋友?"),
-        h("p", null, "完成REDI 测试解锁你和月经的关系，", h("br"), "看看你的经期体验对应哪种人格、锦囊和特别勋章。")
+        h("p", null, "完成 REDI 测试解锁你和月经的关系，", h("br"), "看看你的经期体验对应哪种人格、锦囊和特别勋章。")
       ),
       h("button", {
         type: "button",
@@ -374,7 +374,7 @@ function CoverPage({ onStart }: { onStart: () => void }) {
       )
     ),
     h("footer", { className: "cover-footer" },
-      h("p", { className: "cover-footer-note" }, "*REDI：月经（RED）人格（Indicators）"),
+      h("p", { className: "cover-footer-note" }, "*REDI：月经（RED）人格（indentities）"),
       h("div", { className: "cover-logo-row", "aria-label": "合作团队 logo" },
         h("img", {
           src: partnerLogoGroup,
