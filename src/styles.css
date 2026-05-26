@@ -146,6 +146,28 @@ button {
   margin-top: 2px;
 }
 
+.cover-logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 5vw, 28px);
+  margin-top: 6px;
+}
+
+.cover-logo {
+  display: block;
+  width: auto;
+  object-fit: contain;
+}
+
+.cover-logo-plan {
+  height: clamp(18px, 5.3vw, 28px);
+}
+
+.cover-logo-better-period {
+  height: clamp(16px, 4.8vw, 25px);
+}
+
 .cover-start-button {
   position: relative;
   z-index: 10;

@@ -69,6 +69,8 @@ const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 const resultFlowerImage = publicAsset("images/flower.png");
 const resultBracketLeftImage = publicAsset("images/result-bracket-left.png");
 const resultBracketRightImage = publicAsset("images/result-bracket-right.png");
+const planInternationalLogo = publicAsset("images/plan-international-logo.png");
+const betterPeriodLogo = publicAsset("images/better-period-logo.png");
 const resultDisclaimer = "*本测试仅为趣味互动工具，旨在帮助你觉察月经相关感受，不能作为医学诊断依据。如有持续周期异常、剧烈疼痛或其他不适，请及时前往正规医院咨询。";
 
 const initialState: AppState = {
@@ -374,7 +376,18 @@ function CoverPage({ onStart }: { onStart: () => void }) {
     ),
     h("footer", { className: "cover-footer" },
       h("p", { className: "cover-footer-note" }, "*REDI：月经（RED）人格（Indicators）"),
-      h("p", { className: "cover-footer-note" }, "月来月好 BetterPeriod💗致力于让所有月经体验安全、舒适、有尊严")
+      h("div", { className: "cover-logo-row", "aria-label": "合作团队 logo" },
+        h("img", {
+          src: planInternationalLogo,
+          alt: "Plan International",
+          className: "cover-logo cover-logo-plan"
+        }),
+        h("img", {
+          src: betterPeriodLogo,
+          alt: "月来月好 BetterPeriod",
+          className: "cover-logo cover-logo-better-period"
+        })
+      )
     )
   );
 }
