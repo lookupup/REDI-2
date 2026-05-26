@@ -374,7 +374,7 @@ function CoverPage({ onStart }: { onStart: () => void }) {
       )
     ),
     h("footer", { className: "cover-footer" },
-      h("p", { className: "cover-footer-note" }, "*REDI：月经（RED）人格（indentities）"),
+      h("p", { className: "cover-footer-note" }, "*REDI：月经（RED）人格（Indentities）"),
       h("div", { className: "cover-logo-row", "aria-label": "合作团队 logo" },
         h("img", {
           src: partnerLogoGroup,
@@ -529,7 +529,7 @@ function SpecialResultPage({
         h("img", {
           src: specialImage,
           alt: `${result.name} ${result.englishName}人格形象`,
-          className: "special-result-avatar"
+          className: `special-result-avatar special-result-avatar-${resultId.toLowerCase()}`
         }),
         h("img", {
           src: resultBracketRightImage,
@@ -772,7 +772,7 @@ function ResultDisclaimer() {
 }
 
 function ResultTeamCredit() {
-  return h("p", { className: "result-team-credit mx-auto" }, "Designed with love by BetterPeriod Team 💗");
+  return h("p", { className: "result-team-credit mx-auto" }, "国际计划×月来月好💗愿所有月经体验安全，舒适，有尊严");
 }
 
 function TiltCard({ className, label, onClick }: { className: string; label: string; onClick: () => void }) {

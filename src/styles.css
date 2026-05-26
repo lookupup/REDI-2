@@ -1406,6 +1406,11 @@ button {
   transform: translateY(clamp(2px, 1.2vw, 8px));
 }
 
+.special-result-avatar-ally {
+  width: min(64vw, 270px);
+  max-height: clamp(220px, 60vw, 320px);
+}
+
 .special-character-stage .result-deco {
   z-index: 29;
   top: 52%;
@@ -1814,6 +1819,11 @@ button {
   .special-result-avatar {
     width: min(100vw, 380px);
     max-height: clamp(314px, 88vw, 430px);
+  }
+
+  .special-result-avatar-ally {
+    width: min(62vw, 250px);
+    max-height: clamp(210px, 58vw, 300px);
   }
 
   .special-result-profile {
