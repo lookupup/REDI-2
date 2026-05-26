@@ -103,7 +103,7 @@ export const formalQuestions: Question[] = [
   },
   {
     id: "E2",
-    title: "经期那几天，你对出门、运动、社交的态度是什么模式？",
+    title: "经期那几天，你对出门、运动、社交的态度是什么？",
     type: "formal",
     dimension: "E",
     options: [
