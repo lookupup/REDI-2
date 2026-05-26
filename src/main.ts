@@ -375,7 +375,7 @@ function CoverPage({ onStart }: { onStart: () => void }) {
       )
     ),
     h("footer", { className: "cover-footer" },
-      h("p", { className: "cover-footer-note" }, "*REDI：月经（RED）人格（Indentities）"),
+      h("p", { className: "cover-footer-note" }, "*REDI：月经（RED）人格（Identities）"),
       h("div", { className: "cover-logo-row", "aria-label": "合作团队 logo" },
         h("img", {
           src: partnerLogoGroup,
