@@ -984,8 +984,27 @@ button {
 }
 
 .save-share-chip {
-  padding: 4px 10px;
+  display: inline-grid;
+  min-height: 27px;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 10px;
   font-size: 12px;
+  line-height: 1;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.save-share-chip .result-chip-icon {
+  display: grid;
+  width: 14px;
+  height: 14px;
+  place-items: center;
+  font-size: 12px;
+  line-height: 1;
 }
 
 .save-share-logo {
