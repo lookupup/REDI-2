@@ -2,7 +2,10 @@
   Designed with love by BetterPeriod Team 💗
 
   REDI-Test Team:
-  Jade · 蓝灯 · Rita · 小chen · 小鱼 · 亦杨 · Zudy
+  Jade · 蓝灯 · Rita · 小chen · 小鱼 · 汀帆 · 亦杨 · Zudy
+
+  Collaboration Team:
+  BetterPeriod Team & Plan International Team
 
   Special thanks to all friends of BetterPeriod,
   who supported this project with care, ideas and encouragement.
