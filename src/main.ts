@@ -648,7 +648,6 @@ function FinalResultPage({
               "特别勋章解读"
             ),
             h("h3", null, `${badge.name} · ${badge.englishName}`),
-            "declaration" in badge && h("p", null, badge.declaration),
             badge.body.map((paragraph) => h("p", { key: paragraph }, paragraph))
           ))
         ),
