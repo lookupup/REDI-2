@@ -568,7 +568,7 @@ function SpecialResultPage({
 function FinalResultPage({
   calculatedResult,
   activePopup,
-  onOpenPopup: _onOpenPopup,
+  onOpenPopup,
   onClosePopup,
   onRestart
 }: {
@@ -582,96 +582,7 @@ function FinalResultPage({
   const personaImage = personaImages[calculatedResult.personaImageKey] || personaImages[parts.persona.id] || personaImages.STAR;
   const badges = parts.badges;
   const captureRef = React.useRef<HTMLElement | null>(null);
-  const [isSaving, setIsSaving] = React.useState(false);
   const { toastMessage, shareResult } = useShareFeedback();
-
-  const saveFullResult = async () => {
-    if (!captureRef.current || isSaving) return;
-
-    trackEvent("click_save_image", {
-      personality_result: calculatedResult.personaImageKey,
-      ...getSharedAnalyticsPayload()
-    });
-    setIsSaving(true);
-    captureRef.current.classList.add("result-exporting");
-    try {
-      await document.fonts?.ready?.catch(() => undefined);
-      await new Promise((resolve) => window.requestAnimationFrame(resolve));
-      await new Promise((resolve) => window.requestAnimationFrame(resolve));
-      const exportChips: SvgExportChip[] = Array.from(captureRef.current.querySelectorAll<HTMLElement>(".result-chip")).map((chip) => {
-        const rect = chip.getBoundingClientRect();
-        const icon = chip.querySelector<HTMLElement>(".result-chip-icon")?.innerText.trim() || "";
-        const text = Array.from(chip.childNodes)
-          .filter((node) => node.nodeType === Node.TEXT_NODE)
-          .map((node) => node.textContent || "")
-          .join("")
-          .trim();
-        return {
-          width: Math.ceil(rect.width),
-          height: Math.ceil(rect.height),
-          icon,
-          text,
-          background: window.getComputedStyle(chip).backgroundImage !== "none"
-            ? window.getComputedStyle(chip).backgroundImage
-            : window.getComputedStyle(chip).backgroundColor
-        };
-      });
-      const exportTitles: SvgExportTitle[] = Array.from(captureRef.current.querySelectorAll<HTMLElement>(".result-card-title")).map((title) => {
-        const rect = title.getBoundingClientRect();
-        const icon = title.querySelector<HTMLElement>(".result-card-title-icon")?.innerText.trim() || "";
-        const text = Array.from(title.childNodes)
-          .filter((node) => node.nodeType === Node.TEXT_NODE)
-          .map((node) => node.textContent || "")
-          .join("")
-          .trim();
-        return {
-          width: Math.ceil(rect.width),
-          height: Math.ceil(rect.height),
-          icon,
-          text
-        };
-      });
-      const canvas = await html2canvas(captureRef.current, {
-        backgroundColor: "#ffffff",
-        scale: Math.min(window.devicePixelRatio || 2, 3),
-        useCORS: true,
-        windowWidth: captureRef.current.scrollWidth,
-        windowHeight: captureRef.current.scrollHeight,
-        onclone: (clonedDocument) => {
-          clonedDocument.querySelectorAll<HTMLElement>(".result-chip").forEach((chip, index) => {
-            const exportChip = exportChips[index];
-            if (!exportChip) return;
-            const image = clonedDocument.createElement("img");
-            image.src = chipSvgDataUrl(exportChip);
-            image.alt = chip.textContent?.trim() || "";
-            image.style.display = "block";
-            image.style.width = `${exportChip.width}px`;
-            image.style.height = `${exportChip.height}px`;
-            chip.replaceWith(image);
-          });
-          clonedDocument.querySelectorAll<HTMLElement>(".result-card-title").forEach((title, index) => {
-            const exportTitle = exportTitles[index];
-            if (!exportTitle) return;
-            const image = clonedDocument.createElement("img");
-            image.src = titleSvgDataUrl(exportTitle);
-            image.alt = title.textContent?.trim() || "";
-            image.style.display = "block";
-            image.style.width = `${exportTitle.width}px`;
-            image.style.height = `${exportTitle.height}px`;
-            title.replaceWith(image);
-          });
-        }
-      });
-      const url = canvas.toDataURL("image/png");
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `REDI-${calculatedResult.personaImageKey}.png`;
-      link.click();
-    } finally {
-      captureRef.current?.classList.remove("result-exporting");
-      setIsSaving(false);
-    }
-  };
 
   return h("main", { className: "result-page result-page-redesign" },
     h("article", { ref: captureRef, className: "result-export-surface" },
@@ -743,10 +654,9 @@ function FinalResultPage({
         h("footer", { className: "result-actions" },
           h("button", {
             type: "button",
-            onClick: saveFullResult,
-            disabled: isSaving,
+            onClick: () => onOpenPopup("save"),
             className: "result-footer-button result-save-button"
-          }, "一键长图保存"),
+          }, "保存分享图"),
           h("button", {
             type: "button",
             onClick: shareResult,
@@ -841,78 +751,93 @@ function SaveImagePopup({
 }) {
   const captureRef = React.useRef<HTMLElement | null>(null);
   const personaImage = personaImages[calculatedResult.personaImageKey] || personaImages[parts.persona.id] || personaImages.STAR;
-  const badges = parts.badges;
+  const [isSaving, setIsSaving] = React.useState(false);
 
   const saveImage = async () => {
-    if (!captureRef.current) return;
+    if (!captureRef.current || isSaving) return;
 
     trackEvent("click_save_image", {
       personality_result: calculatedResult.personaImageKey,
       source: "save_popup",
       ...getSharedAnalyticsPayload()
     });
-    const canvas = await html2canvas(captureRef.current, {
-      backgroundColor: "#ffffff",
-      scale: Math.min(window.devicePixelRatio || 2, 3),
-      useCORS: true
-    });
-    const url = canvas.toDataURL("image/png");
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `REDI-${calculatedResult.personaImageKey}.png`;
-    link.click();
+    setIsSaving(true);
+    try {
+      await document.fonts?.ready?.catch(() => undefined);
+      await new Promise((resolve) => window.requestAnimationFrame(resolve));
+      const canvas = await html2canvas(captureRef.current, {
+        backgroundColor: "#ffffff",
+        scale: Math.min(window.devicePixelRatio || 2, 3),
+        useCORS: true,
+        windowWidth: captureRef.current.scrollWidth,
+        windowHeight: captureRef.current.scrollHeight
+      });
+      const url = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `REDI-share-${calculatedResult.personaImageKey}.png`;
+      link.click();
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return h("div", { className: "result-modal save-modal", role: "dialog", "aria-modal": "true", "aria-labelledby": "save-popup-title" },
     h("button", { type: "button", className: "result-modal-backdrop", "aria-label": "关闭弹窗", onClick: onClose }),
-    h("div", { className: "save-popup-elements", "aria-hidden": "true" },
-      h("span", { className: "popup-curl popup-curl-left" }, "{"),
-      h("span", { className: "popup-curl popup-curl-right" }, "}")
-    ),
     h("section", { className: "save-popup-shell" },
       h("button", { type: "button", className: "result-popup-close save-popup-close", "aria-label": "关闭弹窗", onClick: onClose }, "×"),
       h("div", { className: "save-popup-scroll" },
-        h("article", { ref: captureRef, className: "save-long-card" },
-          h("figure", { className: "save-avatar-wrap" },
+        h("article", { ref: captureRef, className: "save-share-card" },
+          h("section", { className: "save-share-hero" },
+            h("h1", { id: "save-popup-title", className: "save-share-title" }, `${parts.persona.name} · ${parts.persona.englishName}`),
+            h("img", {
+              src: resultBracketLeftImage,
+              alt: "",
+              className: "save-share-bracket save-share-bracket-left",
+              "aria-hidden": "true"
+            }),
+            h("img", {
+              src: resultBracketRightImage,
+              alt: "",
+              className: "save-share-bracket save-share-bracket-right",
+              "aria-hidden": "true"
+            }),
+            h("img", {
+              src: resultFlowerImage,
+              alt: "",
+              className: "save-share-flower save-share-flower-left",
+              "aria-hidden": "true"
+            }),
+            h("img", {
+              src: resultFlowerImage,
+              alt: "",
+              className: "save-share-flower save-share-flower-right",
+              "aria-hidden": "true"
+            }),
             h("img", {
               src: personaImage,
               alt: `${parts.persona.name}人格形象`,
-              className: "save-avatar"
+              className: "save-share-avatar"
             })
           ),
-          h("div", { className: "save-chip-row" },
-            parts.persona.tags.map((tag) => h("span", { key: tag, className: "result-chip" }, `≋ ${tag}`)),
-            calculatedResult.badges.includes("HARD") && h("span", { className: "result-chip" }, "♿ DISABILITY")
+          h("section", { className: "save-share-content" },
+            h("blockquote", { className: "save-share-quote" }, `“${parts.persona.declaration}”`),
+            h("div", { className: "save-share-chip-row", "aria-label": "人格标签" },
+              parts.persona.tags.map((tag, index) => h("span", { key: tag, className: "result-chip save-share-chip" },
+                h("span", { className: "result-chip-icon", "aria-hidden": "true" }, chipIcons[index % chipIcons.length]),
+                tag
+              ))
+            ),
+            h("img", {
+              src: partnerLogoGroup,
+              alt: "Plan International 和月来月好 BetterPeriod",
+              className: "save-share-logo"
+            })
           ),
-          h("h1", { id: "save-popup-title", className: "save-quote" }, `“${parts.persona.declaration}”`),
-          h("section", { className: "save-section save-section-persona" },
-            h("h2", null, "人格档案"),
-            parts.persona.body.map((paragraph) => h("p", { key: paragraph }, paragraph))
-          ),
-          h("section", { className: "save-section save-section-action" },
-            h("h2", null, "经期行动小锦囊"),
-            h("p", null, parts.actionKit.declaration),
-            parts.actionKit.body.map((paragraph) => h("p", { key: paragraph }, paragraph)),
-            h("ul", null, parts.actionKit.tips.map((tip) => h("li", { key: tip }, tip)))
-          ),
-          badges.length > 0 && h("section", { className: "save-section save-section-badges" },
-            h("h2", null, "特别勋章解读"),
-            badges.map((badge) => h("div", { key: badge.id, className: "save-badge-block" },
-              h("h3", null, badge.name),
-              h("p", null, badge.declaration),
-              badge.body.map((paragraph) => h("p", { key: paragraph }, paragraph))
-            ))
-          ),
-          h("footer", { className: "save-card-footer" }, "REDI 月经人格测试 · 你的完整结果长图")
         )
       ),
-      h("button", { type: "button", className: "save-download-button", onClick: saveImage },
-        h("span", { className: "download-icon", "aria-hidden": "true" },
-          h("svg", { viewBox: "0 0 24 24", fill: "none" },
-            h("path", { d: "M12 3v11m0 0 4-4m-4 4-4-4M5 17v3h14v-3", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round" })
-          )
-        ),
-        "保存到本地"
+      h("button", { type: "button", className: "save-download-button", onClick: saveImage, disabled: isSaving },
+        isSaving ? "保存中..." : "保存到相册"
       )
     )
   );
