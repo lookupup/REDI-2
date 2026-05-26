@@ -818,7 +818,7 @@ function SaveImagePopup({
             h("div", { className: "save-share-chip-row", "aria-label": "人格标签" },
               parts.persona.tags.map((tag, index) => h("span", { key: tag, className: "result-chip save-share-chip" },
                 h("span", { className: "result-chip-icon", "aria-hidden": "true" }, chipIcons[index % chipIcons.length]),
-                tag
+                h("span", { className: "save-share-chip-label" }, tag)
               ))
             ),
             h("img", {

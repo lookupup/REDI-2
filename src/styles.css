@@ -856,7 +856,7 @@ button {
   position: relative;
   z-index: 2;
   display: flex;
-  width: 384px;
+  width: 360px;
   max-width: calc(100vw - 24px);
   max-height: min(860px, calc(100dvh - 36px));
   flex-direction: column;
@@ -869,8 +869,14 @@ button {
 
 .save-popup-close {
   z-index: 8;
-  right: max(10px, calc((100% - 360px) / 2 + 8px));
   top: 8px;
+  right: 8px;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  font-size: 24px;
+  line-height: 1;
 }
 
 .save-popup-scroll {
@@ -897,8 +903,8 @@ button {
 .save-share-hero {
   position: relative;
   width: 100%;
-  height: 226px;
-  flex: 0 0 226px;
+  height: 212px;
+  flex: 0 0 212px;
   background: #ffffff;
   overflow: visible;
 }
@@ -918,7 +924,7 @@ button {
   position: relative;
   z-index: 5;
   margin: 0;
-  padding: 18px 42px 0;
+  padding: 16px 42px 0;
   text-align: center;
   font-family: "ChillDIN", "Source Han Sans SC", "Noto Sans CJK SC", "PingFang SC", system-ui, sans-serif;
   font-size: 22px;
@@ -930,10 +936,10 @@ button {
   position: absolute;
   z-index: 4;
   left: 50%;
-  top: 68px;
+  top: 56px;
   display: flex;
-  width: 304px;
-  height: 264px;
+  width: 218px;
+  height: 190px;
   align-items: center;
   justify-content: center;
   margin: 0;
@@ -960,17 +966,17 @@ button {
   flex: 1 1 auto;
   flex-direction: column;
   align-items: center;
-  padding: 64px 22px 18px;
+  padding: 34px 22px 22px;
 }
 
 .save-share-quote {
   margin: 0;
-  max-width: 322px;
+  max-width: 312px;
   text-align: center;
   font-family: "ChillDIN", "Source Han Sans SC", "Noto Sans CJK SC", "PingFang SC", system-ui, sans-serif;
-  font-size: 21px;
+  font-size: 17px;
   font-weight: 900;
-  line-height: 1.24;
+  line-height: 1.28;
   color: #050505;
 }
 
@@ -980,14 +986,12 @@ button {
   flex-wrap: wrap;
   justify-content: center;
   gap: 7px;
-  margin-top: 14px;
+  margin-top: 13px;
 }
 
 .save-share-chip {
-  display: inline-grid;
-  min-height: 27px;
-  grid-auto-flow: column;
-  grid-auto-columns: max-content;
+  display: inline-flex;
+  min-height: 28px;
   align-items: center;
   justify-content: center;
   gap: 5px;
@@ -1005,14 +1009,22 @@ button {
   place-items: center;
   font-size: 12px;
   line-height: 1;
+  transform: translateY(-1px);
+}
+
+.save-share-chip-label {
+  display: block;
+  line-height: 1;
+  transform: translateY(-1px);
+  white-space: nowrap;
 }
 
 .save-share-logo {
   display: block;
-  width: 146px;
+  width: 136px;
   height: auto;
-  margin-top: auto;
-  padding-top: 14px;
+  margin-top: 14px;
+  padding-top: 0;
   object-fit: contain;
 }
 
