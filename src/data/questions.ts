@@ -47,9 +47,9 @@ export const formalQuestions: Question[] = [
     type: "formal",
     dimension: "P",
     options: [
-      option("A", "顶流级别：量大到一天换好几次，不换就喜提“爆”热搜", 3, "P"),
-      option("B", "常驻卡司：中等流量，正常换就够，偶尔小出圈", 2, "P"),
-      option("C", "查无此人：少到自己都搜不到存在感，心想“就这？”", 1, "P"),
+      option("A", "顶流级别：量大到一天换好几次卫生用品", 3, "P"),
+      option("B", "常驻卡司：中等流量，正常换卫生用品就够", 2, "P"),
+      option("C", "查无此人：少到没什么存在感", 1, "P"),
       option("D", "退圈人士：几乎没有，怀疑月经已经注销工作室", 0, "P")
     ]
   },
@@ -59,7 +59,7 @@ export const formalQuestions: Question[] = [
     type: "formal",
     dimension: "P",
     options: [
-      option("A", "月度大戏：每次必到，遵医嘱使用止痛药，严重时只能和床组队休息", 3, "P"),
+      option("A", "月度大戏：遵医嘱使用止痛药，严重时只能和床组队休息", 3, "P"),
       option("B", "日常短剧：不舒服，但靠热水袋和“我很好”的表情包能撑过去", 2, "P"),
       option("C", "花絮片段：偶尔微微痛，热敷一下就像给肚子发了张“休息券”", 1, "P"),
       option("D", "剧本没写我：痛经？这部剧里没有我的角色", 0, "P")
@@ -67,7 +67,7 @@ export const formalQuestions: Question[] = [
   },
   {
     id: "P3",
-    title: "你正在开一个很重要的会，突然感觉到“它来了”。此刻你——",
+    title: "经期第二天，你正在开一个很重要的会。此刻你——",
     type: "formal",
     dimension: "P",
     options: [
@@ -95,10 +95,10 @@ export const formalQuestions: Question[] = [
     type: "formal",
     dimension: "E",
     options: [
-      option("A", "悲情单曲循环：情绪低落、沮丧、疲惫，对拒绝和批评更敏感，容易哭", 0, "E"),
-      option("B", "杂音干扰模式：焦虑、紧张、烦躁、易怒，坐立不安，注意力难以集中", 1, "E"),
-      option("C", "稳定白噪音：情绪和平时差不多，无明显波动和平时差不多", 2, "E"),
-      option("D", "灵感全开模式：灵感全开：感受力和创造力反而更强，情绪敏锐度提升", 3, "E")
+      option("A", "悲情单曲循环：低落、疲惫，较平时更敏感，容易哭", 0, "E"),
+      option("B", "杂音干扰模式：焦虑、紧张、烦躁、易怒，注意力难以集中", 1, "E"),
+      option("C", "稳定白噪音：情绪和平时差不多，无明显波动", 2, "E"),
+      option("D", "灵感全开：感受力和创造力反而更强，情绪敏锐度提升", 3, "E")
     ]
   },
   {
@@ -107,10 +107,10 @@ export const formalQuestions: Question[] = [
     type: "formal",
     dimension: "E",
     options: [
-      option("A", "超级省电模式：全部取消，经期就是我的“免打扰”开关，任何约都是对不起改天吧", 0, "E"),
-      option("B", "低电量运行：能推就推，推不掉的去了也是挂着“我不在”的状态", 1, "E"),
-      option("C", "均衡模式：照常，可能稍微调低亮度或音量，但不会特意关机", 2, "E"),
-      option("D", "性能模式：有时候反而更想出门，感觉体力没掉线，甚至像充了个电", 3, "E")
+      option("A", "超级省电模式：全部取消，经期就是我的“免打扰”开关", 0, "E"),
+      option("B", "低电量运行：能推就推", 1, "E"),
+      option("C", "均衡模式：照常活动，可能稍微放慢一点节奏", 2, "E"),
+      option("D", "性能模式：有时候反而更想出门，感觉体力甚至像充满电", 3, "E")
     ]
   },
   {
@@ -127,14 +127,14 @@ export const formalQuestions: Question[] = [
   },
   {
     id: "E4",
-    title: "经期你的“美食信号”和“社交信号”是什么？",
+    title: "经期你的“食欲信号”和“社交信号”是什么？",
     type: "formal",
     dimension: "E",
     options: [
-      option("A", "两盏全灭：什么都不想吃，也不想和人类接触", 0, "E"),
-      option("B", "只有食欲亮红灯：特别馋某类食物，社交信号灯完全黑着", 1, "E"),
-      option("C", "两盏都是黄灯：和平时差不多，不急不躁", 2, "E"),
-      option("D", "两盏绿灯：食欲好，社交信号也亮着，欢迎搭话", 3, "E")
+      option("A", "都不在线：什么都不想吃，也不想和人类接触", 0, "E"),
+      option("B", "只有一个在线：食欲大增，但不想社交；或只想社交但毫无食欲", 1, "E"),
+      option("C", "正常模式：和平时差不多", 2, "E"),
+      option("D", "双倍在线：食欲好，也欢迎搭话", 3, "E")
     ]
   },
   {
@@ -143,7 +143,7 @@ export const formalQuestions: Question[] = [
     type: "formal",
     dimension: "R",
     options: [
-      option("A", "随缘模式：它来得不太规律，有时间隔比较长，但我知道这就是我的节奏", 0, "R"),
+      option("A", "随缘模式：它来得不太规律，有时间隔比较长", 0, "R"),
       option("B", "大致有数：我能猜个大概范围，但误差有时超过一周", 1, "R"),
       option("C", "基本合拍：误差不超过三五天，心里比较有底", 2, "R"),
       option("D", "灵魂同步：非常稳定，我会提前在日历上写好“要来咯”", 3, "R")
@@ -155,7 +155,7 @@ export const formalQuestions: Question[] = [
     type: "formal",
     dimension: "R",
     options: [
-      option("A", "完全看心情：有时3天就收工，有时拖到7天，像没有剧本的即兴演出", 0, "R"),
+      option("A", "完全看心情：有时3天就收工，有时拖到7天", 0, "R"),
       option("B", "偶尔改档期：大概知道多长，但经常有明显波动", 1, "R"),
       option("C", "基本按排班：稳定为主，偶尔多一天或少一天", 2, "R"),
       option("D", "固定工号：非常固定，几乎每次都一样", 3, "R")
@@ -167,10 +167,10 @@ export const formalQuestions: Question[] = [
     type: "formal",
     dimension: "R",
     options: [
-      option("A", "彻底换画风：经量、周期、痛感都和以前不一样了", 0, "R"),
-      option("B", "偶尔换滤镜：有些波动，但说不清是规律变了还是偶然", 1, "R"),
-      option("C", "基本原画：偶尔小波动", 2, "R"),
-      option("D", "稳定输出：几乎没有变化", 3, "R")
+      option("A", "彻底换画风：连续好几个月，经量、周期、痛感都和我的长期状态明显不同", 0, "R"),
+      option("B", "常换滤镜：经常变化，比如周期忽长忽短、变化超过7天，但又不是彻底改头换面", 1, "R"),
+      option("C", "微调原画：整体和我的长期状态差不多，偶尔有点小波动", 2, "R"),
+      option("D", "稳定输出：和我的长期状态相比几乎没有变化", 3, "R")
     ]
   },
   {
@@ -179,8 +179,8 @@ export const formalQuestions: Question[] = [
     type: "formal",
     dimension: "I",
     options: [
-      option("A", "完全没剧透：每次都是正片突然上线，我才反应过来“啊？开始了？”", 0, "I"),
-      option("B", "片尾字幕型：来了之后才想起“对哦，那些症状就是预告片”，但当时没看懂", 1, "I"),
+      option("A", "完全没剧透：每次都是月经来了才知道", 0, "I"),
+      option("B", "片尾字幕型：来了之后才想起之前的一些小症状表示月经要来了", 1, "I"),
       option("C", "偶尔发预告：有时能感觉到，比如突然想吃甜食、冒痘、腰酸", 2, "I"),
       option("D", "专属预警系统：身体有一套固定信号，我已经能准确翻译成“月经即将抵达”", 3, "I")
     ]
@@ -216,7 +216,7 @@ export const formalQuestions: Question[] = [
     dimension: "O",
     options: [
       option("A", "直呼其名：月经", 3, "O"),
-      option("B", "常用暗号：大姨妈、那个、好朋友、例假", 2, "O"),
+      option("B", "常用暗号：大姨妈、那个、例假", 2, "O"),
       option("C", "更隐晦的说法：倒霉了、身上来了、亲戚来了", 1, "O"),
       option("D", "完全不说，用眼神或动作暗示", 0, "O")
     ]
@@ -251,10 +251,10 @@ export const formalQuestions: Question[] = [
     type: "formal",
     dimension: "D",
     options: [
-      option("A", "极限生存挑战：等到山穷水尽再说，临时找朋友借或狂奔去超市", 0, "D"),
+      option("A", "极限生存挑战：临时找朋友借或狂奔去超市", 0, "D"),
       option("B", "事后补票型：用完了才一拍脑袋想起来，然后顺手买一包", 1, "D"),
       option("C", "主动备货型：看到存量告急就自觉补货，绝不让自己陷入危机", 2, "D"),
-      option("D", "囤囤鼠模式：家里随时有备货，从不断货，像开了一家小卖部", 3, "D"),
+      option("D", "囤囤鼠模式：家里从不断货，像开了一家小卖部", 3, "D"),
       option("E", "我不会用完！我用的不是卫生巾/棉条，是月经杯/月经碟/月经裤等", 3, "D", ["ECO"])
     ]
   },
@@ -276,9 +276,9 @@ export const formalQuestions: Question[] = [
     type: "formal",
     dimension: "D",
     options: [
-      option("A", "够用就好派：我只用我一直用的那种，其他的没研究过", 0, "D"),
+      option("A", "够用就好派：我只用我一直用的那种，其它的没了解过", 0, "D"),
       option("B", "普通玩家：知道有不同选择这回事，但没认真研究过", 1, "D"),
-      option("C", "进阶玩家：研究过不同产品的优缺点，会根据状态换着用", 2, "D"),
+      option("C", "进阶玩家：研究过不同产品的优缺点，已经找到最适合我的选择", 2, "D"),
       option("D", "满级攻略博主：对市面上的选择如数家珍，还会主动给朋友安利或避雷", 3, "D")
     ]
   }
@@ -291,10 +291,10 @@ export const hiddenQuestions: Question[] = [
     type: "hidden",
     dimension: null,
     options: [
-      option("A", "我基本可以按自己的舒适度和习惯来选择用品", null, null),
-      option("B", "会比较价格，但不到影响使用的程度", null, null),
-      option("C", "我偶尔会因为出门、忘记携带等情况临时调整使用方式", null, null),
-      option("D", "我会因为价格、获取不便等现实原因，不得不减少更换频率或做取舍", null, null, ["RESILIENT"])
+      option("A", "我选择用品的时候主要考虑舒不舒服，习惯用哪种", null, null),
+      option("B", "虽然购买经期用品不至于是负担，但我通常会精打细算、货比三家", null, null),
+      option("C", "我偶尔会因为出门、忘记携带等情况临时调整用品", null, null),
+      option("D", "我曾经或现在仍会因为价格、获取不便等现实原因，不得不减少更换用品频率或做取舍", null, null, ["RESILIENT"])
     ]
   },
   {
@@ -304,7 +304,7 @@ export const hiddenQuestions: Question[] = [
     dimension: null,
     options: [
       option("A", "没有，和大多数人差不多", null, null),
-      option("B", "我有慢性病或特殊健康情况，会影响我的经期体验或管理方式", null, null, ["VOYAGER"]),
+      option("B", "我有慢性病或特殊健康情况，这会影响我的经期体验或管理方式", null, null, ["VOYAGER"]),
       option("C", "我是一名残障人士，经期管理比一般人更复杂", null, null, ["HARD"]),
       option("D", "月经让我在心理或情绪上承受了额外的负担或压力", null, null, ["DIVER"])
     ]
@@ -317,8 +317,8 @@ export const hiddenQuestions: Question[] = [
     options: [
       option("A", "卫生巾，使用方便", null, null),
       option("B", "卫生棉条，舒适度高", null, null),
-      option("C", "月经杯 / 月经碟等可重复使用用品", null, null, ["ECO"]),
-      option("D", "我所在的地方买不到太多种类，或者价格太高，只能有什么用什么，有时候甚至用卫生纸或布条代替", null, null, ["RESILIENT"])
+      option("C", "月经杯/月经碟/月经裤等可重复使用用品", null, null, ["ECO"]),
+      option("D", "曾经或现在，我所在的地方买不到太多种类的经期用品，或者价格太高，只能有什么用什么，有时候甚至用卫生纸或布条代替", null, null, ["RESILIENT"])
     ]
   },
   {
@@ -327,9 +327,9 @@ export const hiddenQuestions: Question[] = [
     type: "hidden",
     dimension: null,
     options: [
-      option("A", "我在公司/学校/社区设置了免费卫生用品互助盒，应急取用、取一还一，为突然来月经的女性提供应急物资支持", null, null, ["ACTION"]),
-      option("B", "我在网上或现实里为月经假、公共卫生间是否配备经期产品、月经税减免等摇旗呐喊过", null, null, ["ACTION"]),
-      option("C", "我关注或参与过帮助偏远地区女孩获取卫生用品的行动（如捐赠、义卖、传播信息等）", null, null, ["ACTION"]),
+      option("A", "我在公司/学校/社区设置了免费卫生用品互助盒，为突然来月经的女性提供应急支持", null, null, ["ACTION"]),
+      option("B", "我在网上或现实里为月经假、公共空间是否配备经期产品、月经税减免等议题发声过", null, null, ["ACTION"]),
+      option("C", "我参与过帮助偏远地区女孩获取卫生用品的行动（如捐赠、义卖、传播信息等）", null, null, ["ACTION"]),
       option("D", "暂时还没行动，但我在精神上举双手支持", null, null)
     ]
   }
