@@ -867,9 +867,9 @@ button {
 }
 
 .save-popup-close {
-  z-index: 5;
-  right: 10px;
-  top: 10px;
+  z-index: 8;
+  right: max(14px, calc((100% - 360px) / 2 + 10px));
+  top: 8px;
 }
 
 .save-popup-scroll {
@@ -894,35 +894,19 @@ button {
 
 .save-share-hero {
   position: relative;
-  min-height: 51%;
-  background:
-    linear-gradient(180deg, rgba(149, 222, 227, 0.96) 0%, rgba(199, 234, 241, 0.92) 54%, rgba(251, 226, 246, 0.74) 100%);
+  min-height: 50%;
+  background: #ffffff;
+  overflow: visible;
 }
 
-.save-share-hero::before {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  left: 13%;
-  bottom: -13%;
-  width: clamp(40px, 11vw, 58px);
-  height: clamp(54px, 14vw, 76px);
-  background: linear-gradient(160deg, rgba(250, 225, 246, 0.82) 0%, rgba(251, 235, 250, 0.96) 100%);
-  clip-path: polygon(0 0, 100% 18%, 42% 100%);
-  transform: rotate(-11deg);
-  pointer-events: none;
-}
-
-.save-share-hero::after {
-  content: "";
+.save-share-background {
   position: absolute;
   z-index: 1;
-  right: -22%;
-  bottom: -1px;
-  left: -22%;
-  height: 24%;
-  background: #ffffff;
-  clip-path: ellipse(72% 66% at 50% 100%);
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: auto;
   pointer-events: none;
 }
 
@@ -942,7 +926,7 @@ button {
   position: absolute;
   z-index: 4;
   left: 50%;
-  bottom: -17%;
+  bottom: -16%;
   display: block;
   width: min(70vw, 306px);
   max-height: 90%;
@@ -952,42 +936,6 @@ button {
   transform: translateX(-50%);
 }
 
-.save-share-bracket {
-  position: absolute;
-  z-index: 3;
-  top: 35%;
-  width: clamp(40px, 12vw, 62px);
-  opacity: 0.92;
-  pointer-events: none;
-}
-
-.save-share-bracket-left {
-  left: clamp(12px, 4vw, 24px);
-}
-
-.save-share-bracket-right {
-  right: clamp(12px, 4vw, 24px);
-}
-
-.save-share-flower {
-  position: absolute;
-  z-index: 2;
-  width: clamp(26px, 8vw, 42px);
-  opacity: 0.9;
-  pointer-events: none;
-}
-
-.save-share-flower-left {
-  left: 24%;
-  top: 42%;
-}
-
-.save-share-flower-right {
-  right: 27%;
-  bottom: 11%;
-  filter: hue-rotate(110deg) saturate(0.75) brightness(1.18);
-}
-
 .save-share-content {
   position: relative;
   z-index: 2;
@@ -995,7 +943,7 @@ button {
   flex: 1 1 auto;
   flex-direction: column;
   align-items: center;
-  padding: clamp(44px, 11vw, 58px) clamp(16px, 4.4vw, 24px) clamp(16px, 4vw, 22px);
+  padding: clamp(50px, 12vw, 64px) clamp(16px, 4.4vw, 24px) clamp(16px, 4vw, 22px);
 }
 
 .save-share-quote {

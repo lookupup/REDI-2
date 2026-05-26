@@ -70,6 +70,7 @@ const resultFlowerImage = publicAsset("images/flower.png");
 const resultBracketLeftImage = publicAsset("images/result-bracket-left.png");
 const resultBracketRightImage = publicAsset("images/result-bracket-right.png");
 const partnerLogoGroup = publicAsset("images/partner-logo-group.png");
+const shareBackgroundImage = publicAsset("images/share-background.png");
 const resultDisclaimer = "*本测试仅为趣味互动工具，旨在帮助你觉察月经相关感受，不能作为医学诊断依据。如有持续周期异常、剧烈疼痛或其他不适，请及时前往正规医院咨询。";
 
 const initialState: AppState = {
@@ -764,6 +765,13 @@ function SaveImagePopup({
     setIsSaving(true);
     try {
       await document.fonts?.ready?.catch(() => undefined);
+      await Promise.all(Array.from(captureRef.current.querySelectorAll("img")).map((image) => {
+        if (image.complete) return undefined;
+        return new Promise((resolve) => {
+          image.onload = resolve;
+          image.onerror = resolve;
+        });
+      }));
       await new Promise((resolve) => window.requestAnimationFrame(resolve));
       const canvas = await html2canvas(captureRef.current, {
         backgroundColor: "#ffffff",
@@ -789,31 +797,13 @@ function SaveImagePopup({
       h("div", { className: "save-popup-scroll" },
         h("article", { ref: captureRef, className: "save-share-card" },
           h("section", { className: "save-share-hero" },
+            h("img", {
+              src: shareBackgroundImage,
+              alt: "",
+              className: "save-share-background",
+              "aria-hidden": "true"
+            }),
             h("h1", { id: "save-popup-title", className: "save-share-title" }, `${parts.persona.name} · ${parts.persona.englishName}`),
-            h("img", {
-              src: resultBracketLeftImage,
-              alt: "",
-              className: "save-share-bracket save-share-bracket-left",
-              "aria-hidden": "true"
-            }),
-            h("img", {
-              src: resultBracketRightImage,
-              alt: "",
-              className: "save-share-bracket save-share-bracket-right",
-              "aria-hidden": "true"
-            }),
-            h("img", {
-              src: resultFlowerImage,
-              alt: "",
-              className: "save-share-flower save-share-flower-left",
-              "aria-hidden": "true"
-            }),
-            h("img", {
-              src: resultFlowerImage,
-              alt: "",
-              className: "save-share-flower save-share-flower-right",
-              "aria-hidden": "true"
-            }),
             h("img", {
               src: personaImage,
               alt: `${parts.persona.name}人格形象`,
