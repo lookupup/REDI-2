@@ -14,6 +14,7 @@ type GtagFunction = (...args: unknown[]) => void;
 
 declare global {
   interface Window {
+    __rediGA4PageViewSent?: boolean;
     dataLayer?: unknown[];
     gtag?: GtagFunction;
   }
@@ -105,10 +106,16 @@ export function trackEvent(eventName: AnalyticsEvent, payload: AnalyticsPayload 
 
   try {
     if (!initGA4()) return;
+    if (eventName === "page_view" && window.__rediGA4PageViewSent) {
+      return;
+    }
     window.setTimeout(() => {
       try {
         console.log("[analytics] sending to GA4", eventName, eventPayload);
         window.gtag?.("event", eventName, eventPayload);
+        if (eventName === "page_view") {
+          window.__rediGA4PageViewSent = true;
+        }
       } catch (error) {
         if (isDev) console.warn("[analytics] event failed", eventName, error);
       }

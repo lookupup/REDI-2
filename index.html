@@ -31,12 +31,26 @@
     -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-33E5B0G9BW"></script>
     <script>
+      window.__rediGA4PageViewSent = false;
       window.dataLayer = window.dataLayer || [];
       window.gtag =
         window.gtag ||
         function gtag() {
           window.dataLayer.push(arguments);
         };
+      window.gtag("js", new Date());
+      window.gtag("config", "G-33E5B0G9BW", { send_page_view: false });
+
+      const rediPageViewPayload = {
+        page_path: window.location.pathname + window.location.search,
+        send_to: "G-33E5B0G9BW",
+        source: "html_bootstrap"
+      };
+      console.log("[analytics] GA4 initialized", "G-33E5B0G9BW");
+      console.log("[analytics] trackEvent called", "page_view", rediPageViewPayload);
+      console.log("[analytics] sending to GA4", "page_view", rediPageViewPayload);
+      window.gtag("event", "page_view", rediPageViewPayload);
+      window.__rediGA4PageViewSent = true;
     </script>
   </head>
   <body class="bg-white text-ink">
