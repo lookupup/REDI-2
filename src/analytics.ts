@@ -19,7 +19,7 @@ declare global {
   }
 }
 
-const measurementId = (import.meta.env.VITE_GA4_MEASUREMENT_ID || __GA4_MEASUREMENT_ID__ || "").trim();
+const measurementId = (import.meta.env.VITE_GA4_MEASUREMENT_ID || __GA4_MEASUREMENT_ID__ || "G-33E5B0G9BW").trim();
 const isDev = import.meta.env.DEV;
 let didInit = false;
 let didRequestScript = false;
@@ -50,7 +50,14 @@ export function getSharedAnalyticsPayload() {
 }
 
 function initGA4() {
-  if (!measurementId || didInit || typeof window === "undefined") return;
+  if (typeof window === "undefined") return false;
+
+  if (!measurementId) {
+    if (isDev) console.log("[analytics] GA4 measurement id missing");
+    return false;
+  }
+
+  if (didInit) return true;
 
   didInit = true;
   window.dataLayer = window.dataLayer || [];
@@ -58,7 +65,11 @@ function initGA4() {
     window.dataLayer?.push(args);
   };
   window.gtag("js", new Date());
-  window.gtag("config", measurementId, { send_page_view: false });
+  window.gtag("config", measurementId, {
+    send_page_view: true,
+    page_path: getPagePath()
+  });
+  console.log("[analytics] GA4 initialized", measurementId);
 
   if (!didRequestScript) {
     didRequestScript = true;
@@ -70,9 +81,13 @@ function initGA4() {
     };
     document.head.appendChild(script);
   }
+
+  return true;
 }
 
 export function trackEvent(eventName: AnalyticsEvent, payload: AnalyticsPayload = {}) {
+  console.log("[analytics] trackEvent called", eventName, payload);
+
   const eventPayload = {
     ...payload,
     timestamp: new Date().toISOString()
@@ -84,9 +99,10 @@ export function trackEvent(eventName: AnalyticsEvent, payload: AnalyticsPayload 
   }
 
   try {
-    initGA4();
+    if (!initGA4()) return;
     window.setTimeout(() => {
       try {
+        console.log("[analytics] sending to GA4", eventName, eventPayload);
         window.gtag?.("event", eventName, eventPayload);
       } catch (error) {
         if (isDev) console.warn("[analytics] event failed", eventName, error);
