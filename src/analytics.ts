@@ -66,12 +66,16 @@ function initGA4() {
   };
   window.gtag("js", new Date());
   window.gtag("config", measurementId, {
-    send_page_view: true,
+    send_page_view: false,
     page_path: getPagePath()
   });
   console.log("[analytics] GA4 initialized", measurementId);
 
-  if (!didRequestScript) {
+  const hasGA4Script = Boolean(
+    document.querySelector(`script[src*="googletagmanager.com/gtag/js"][src*="${measurementId}"]`)
+  );
+
+  if (!didRequestScript && !hasGA4Script) {
     didRequestScript = true;
     const script = document.createElement("script");
     script.async = true;
@@ -90,6 +94,7 @@ export function trackEvent(eventName: AnalyticsEvent, payload: AnalyticsPayload 
 
   const eventPayload = {
     ...payload,
+    send_to: measurementId,
     timestamp: new Date().toISOString()
   };
 
